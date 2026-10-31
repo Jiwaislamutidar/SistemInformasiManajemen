@@ -8,20 +8,20 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('penjualan', function (Blueprint $table) {
+        Schema::create('penjualans', function (Blueprint $table) {
             $table->id();
-            // Foreign Key ke tabel mobil dan karyawan (sales)
-            $table->foreignId('mobil_id')->constrained('mobil')->onDelete('cascade');
-            $table->foreignId('karyawan_id')->constrained('karyawan')->onDelete('cascade');
-            $table->string('pembeli');
-            $table->date('tanggal');
+            $table->string('unit_mobil');
+            $table->string('nama_pembeli');
             $table->decimal('harga_jual', 15, 2);
+            $table->string('metode_pembayaran');
+            $table->string('sales_executive');
+            $table->string('bukti_deal')->nullable(); // Opsional jika tidak upload foto
             $table->timestamps();
         });
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('penjualan');
+        Schema::dropIfExists('penjualans');
     }
 };

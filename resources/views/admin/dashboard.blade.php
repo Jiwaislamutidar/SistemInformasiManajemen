@@ -5,7 +5,7 @@
                 <span class="w-3 h-3 rounded-full bg-[#D4AF37]"></span>
                 Dashboard Admin Operasional
             </h2>
-            <div class="text-xs text-gray-500 font-medium">Modul Operasional • Dealer Mobil</div>
+            <div class="text-xs text-gray-500 font-medium">Dealer Management System</div>
         </div>
     </x-slot>
 
@@ -13,26 +13,26 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
                 <div class="bg-white p-4 rounded-2xl border-l-4 border-[#10261C] shadow-sm">
-                    <p class="text-[11px] font-bold text-gray-400 uppercase tracking-wider">Total Unit Ready</p>
-                    <h3 class="text-lg font-extrabold text-gray-900 mt-1">24 Unit</h3>
+                    <p class="text-[11px] font-bold text-gray-400 uppercase tracking-wider">Unit Stok Ready</p>
+                    <h3 class="text-lg font-extrabold text-gray-900 mt-1">24 Mobil</h3>
                 </div>
                 <div class="bg-white p-4 rounded-2xl border-l-4 border-[#D4AF37] shadow-sm">
                     <p class="text-[11px] font-bold text-gray-400 uppercase tracking-wider">Penjualan Bulan Ini</p>
-                    <h3 class="text-lg font-extrabold text-gray-900 mt-1">18 Unit</h3>
+                    <h3 class="text-lg font-extrabold text-gray-900 mt-1">8 Unit</h3>
                 </div>
                 <div class="bg-white p-4 rounded-2xl border-l-4 border-emerald-700 shadow-sm">
-                    <p class="text-[11px] font-bold text-gray-400 uppercase tracking-wider">Absensi Hari Ini</p>
-                    <h3 class="text-lg font-extrabold text-emerald-700 mt-1">45 / 48 Hadir</h3>
+                    <p class="text-[11px] font-bold text-gray-400 uppercase tracking-wider">Karyawan Hadir Hari Ini</p>
+                    <h3 class="text-lg font-extrabold text-emerald-700 mt-1">12 / 12</h3>
                 </div>
                 <div class="bg-white p-4 rounded-2xl border-l-4 border-amber-700 shadow-sm">
                     <p class="text-[11px] font-bold text-gray-400 uppercase tracking-wider">Laporan Pending</p>
-                    <h3 class="text-lg font-extrabold text-amber-700 mt-1">0 Laporan</h3>
+                    <h3 class="text-lg font-extrabold text-amber-700 mt-1">1 Draft</h3>
                 </div>
             </div>
 
-            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-200/80">
-                <h3 class="text-sm font-bold text-gray-800 uppercase tracking-wider mb-2">Akses Cepat Menu Operasional</h3>
-                <p class="text-xs text-gray-500">Gunakan menu di samping atau tombol navigasi untuk melakukan input data harian dealer.</p>
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-200">
+                <h3 class="text-sm font-bold text-gray-800 uppercase tracking-wider mb-2">Ringkasan Operasional Dealer</h3>
+                <p class="text-xs text-gray-500">Selamat datang di Panel Operasional. Gunakan menu sidebar di sebelah kiri untuk melakukan input penjualan, pencatatan pengeluaran, kelola stok mobil, hingga pengiriman laporan mingguan ke Owner.</p>
             </div>
         </div>
     </div>
