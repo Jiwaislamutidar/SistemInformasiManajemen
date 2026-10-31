@@ -11,7 +11,7 @@ use App\Http\Controllers\Owner\KinerjaDivisiController;
 use App\Http\Controllers\Owner\MonitoringKaryawanController;
 use App\Http\Controllers\Owner\DataInvestorController;
 
-// Admin Controllers (Sesuai UML Baru)
+// Admin Controllers 
 use App\Http\Controllers\Admin\DashboardAdminController;
 use App\Http\Controllers\Admin\KirimLaporanController;
 use App\Http\Controllers\Admin\InputPenjualanController;
@@ -21,6 +21,13 @@ use App\Http\Controllers\Admin\KelolaKaryawanController;
 use App\Http\Controllers\Admin\KelolaAbsensiController;
 use App\Http\Controllers\Admin\KelolaDataInvestorController;
 use App\Http\Controllers\Admin\BuatLaporanController;
+
+// Admin IT Controllers 
+use App\Http\Controllers\AdminIt\BackupDataController;
+use App\Http\Controllers\AdminIt\KelolaAkunController;
+use App\Http\Controllers\AdminIt\KelolaDataMasterController;
+use App\Http\Controllers\AdminIt\LihatLogAktivitasController;
+use App\Http\Controllers\AdminIt\PengaturanSistemController;
 
 // Halaman depan
 Route::get('/', function () {
@@ -39,9 +46,9 @@ Route::middleware(['auth'])->group(function () {
         return view('admin.dashboard');
     })->name('admin.dashboard');
 
-    Route::get('/admin-it/dashboard', function () {
-        return view('admin-it.dashboard');
-    })->name('admin-it.dashboard');
+    Route::get('/adminit/dashboard', function () {
+        return view('adminit.dashboard');
+    })->name('adminit.dashboard');
 
     // Halaman Owner
     Route::get('/owner/profit', [ProfitController::class, 'index'])->name('owner.profit');
@@ -51,7 +58,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/owner/monitoringkaryawan', [MonitoringKaryawanController::class, 'index'])->name('owner.monitoringkaryawan');
     Route::get('/owner/datainvestor', [DataInvestorController::class, 'index'])->name('owner.datainvestor');
 
-    // Halaman Admin (Sesuai Use Case UML)
+    // Halaman Admin 
     Route::get('/admin/kirimlaporan', [KirimLaporanController::class, 'index'])->name('admin.kirimlaporan');
     Route::get('/admin/inputpenjualan', [InputPenjualanController::class, 'index'])->name('admin.inputpenjualan');
     Route::get('/admin/inputpengeluaran', [InputPengeluaranController::class, 'index'])->name('admin.inputpengeluaran');
@@ -60,6 +67,13 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/admin/kelolaabsensi', [KelolaAbsensiController::class, 'index'])->name('admin.kelolaabsensi');
     Route::get('/admin/kelolainvestor', [KelolaDataInvestorController::class, 'index'])->name('admin.kelolainvestor');
     Route::get('/admin/buatlaporan', [BuatLaporanController::class, 'index'])->name('admin.buatlaporan');
+
+    // Halaman Admin IT 
+    Route::get('/adminit/backupdata', [BackupDataController::class, 'index'])->name('adminit.backupdata');
+    Route::get('/adminit/kelolaakun', [KelolaAkunController::class, 'index'])->name('adminit.kelolaakun');
+    Route::get('/adminit/keloladatamaster', [KelolaDataMasterController::class, 'index'])->name('adminit.keloladatamaster');
+    Route::get('/adminit/lihatlogaktivitas', [LihatLogAktivitasController::class, 'index'])->name('adminit.lihatlogaktivitas');
+    Route::get('/adminit/pengaturansistem', [PengaturanSistemController::class, 'index'])->name('adminit.pengaturansistem');
 
     // Fitur Profile bawaan Breeze 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

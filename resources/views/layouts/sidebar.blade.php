@@ -77,19 +77,19 @@
         <!-- ================= MENU ADMIN IT ================= -->
         @if(Auth::user()->role === 'admin_it')
             <div class="text-[10px] uppercase tracking-wider text-gray-400 px-3 mb-2 font-bold">Menu System Control</div>
-            <a href="{{ route('admin-it.dashboard') }}" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition {{ request()->routeIs('admin-it.dashboard') ? 'bg-[#D4AF37] text-gray-950 font-bold shadow-md' : 'text-gray-300 hover:bg-white/10 hover:text-white' }}">
+            <a href="{{ route('adminit.dashboard') }}" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition {{ request()->routeIs('admin-it.dashboard') ? 'bg-[#D4AF37] text-gray-950 font-bold shadow-md' : 'text-gray-300 hover:bg-white/10 hover:text-white' }}">
                 <span>⚙️</span> <span>Dashboard Admin IT</span>
             </a>
-            <a href="#" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-gray-300 hover:bg-white/10 hover:text-white transition">
+            <a href="{{ route('adminit.kelolaakun') }}" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-gray-300 hover:bg-white/10 hover:text-white transition">
                 <span>👤</span> <span>Kelola Akun & Hak Akses</span>
             </a>
-            <a href="#" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-gray-300 hover:bg-white/10 hover:text-white transition">
+            <a href="{{ route('adminit.keloladatamaster')}}" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-gray-300 hover:bg-white/10 hover:text-white transition">
                 <span>🗄️</span> <span>Data Master (Divisi/Jabatan)</span>
             </a>
-            <a href="#" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-gray-300 hover:bg-white/10 hover:text-white transition">
+            <a href="{{ route('adminit.backupdata') }}" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-gray-300 hover:bg-white/10 hover:text-white transition">
                 <span>💾</span> <span>Backup & Maintenance</span>
             </a>
-            <a href="#" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-gray-300 hover:bg-white/10 hover:text-white transition">
+            <a href="{{ route('adminit.lihatlogaktivitas') }}" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-gray-300 hover:bg-white/10 hover:text-white transition">
                 <span>📜</span> <span>Log Aktivitas Sistem</span>
             </a>
         @endif
