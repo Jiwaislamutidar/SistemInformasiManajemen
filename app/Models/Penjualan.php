@@ -14,6 +14,7 @@ class Penjualan extends Model
         'nama_pembeli',
         'harga_jual',
         'metode_pembayaran',
+        'jumlah_dp',
         'sales_executive',
         'bukti_deal'
     ];

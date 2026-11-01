@@ -2,18 +2,39 @@
 
 namespace Database\Seeders;
 
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
-    /**
-     * Seed the application's database.
-     */
     public function run(): void
     {
-        $this->call([
-            UserSeeder::class,
-        ]);
+        // 1. Akun Admin
+        User::updateOrCreate(
+            ['email' => 'admin@dealer.com'],
+            [
+                'nama' => 'Admin Operasional',
+                'password' => Hash::make('password123'),
+            ]
+        );
+
+        // 2. Akun Owner
+        User::updateOrCreate(
+            ['email' => 'owner@dealer.com'],
+            [
+                'nama' => 'Owner Showroom',
+                'password' => Hash::make('password123'),
+            ]
+        );
+
+        // 3. Akun Admin IT
+        User::updateOrCreate(
+            ['email' => 'adminit@dealer.com'],
+            [
+                'nama' => 'Admin IT',
+                'password' => Hash::make('password123'),
+            ]
+        );
     }
 }

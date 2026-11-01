@@ -15,33 +15,31 @@ class InputPenjualanController extends Controller
 
     public function store(Request $request)
     {
-        // Validasi input form
         $request->validate([
             'unit_mobil' => 'required|string',
-            'nama_pembeli' => 'required|string|max:255',
+            'nama_pembeli' => 'required|string',
             'harga_jual' => 'required|numeric',
             'metode_pembayaran' => 'required|string',
+            'jumlah_dp' => 'nullable|numeric',
             'sales_executive' => 'required|string',
-            'bukti_deal' => 'nullable|image|mimes:jpeg,png,jpg|max:2048', // Opsional, max 2MB
+            'bukti_deal' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
-        // Handle upload file jika ada
         $path = null;
         if ($request->hasFile('bukti_deal')) {
             $path = $request->file('bukti_deal')->store('bukti-deal', 'public');
         }
 
-        // Simpan ke database menggunakan Model Penjualan
         Penjualan::create([
             'unit_mobil' => $request->unit_mobil,
             'nama_pembeli' => $request->nama_pembeli,
             'harga_jual' => $request->harga_jual,
             'metode_pembayaran' => $request->metode_pembayaran,
+            'jumlah_dp' => $request->metode_pembayaran == 'Kredit' ? $request->jumlah_dp : null,
             'sales_executive' => $request->sales_executive,
             'bukti_deal' => $path,
         ]);
 
-        // Redirect kembali dengan pesan sukses
-        return redirect()->route('admin.inputpenjualan')->with('success', 'Transaksi penjualan unit berhasil disimpan!');
+        return redirect()->route('admin.inputpenjualan')->with('success', 'Transaksi berhasil disimpan!');
     }
 }

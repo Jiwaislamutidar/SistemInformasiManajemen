@@ -68,6 +68,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/admin/kelolaabsensi', [KelolaAbsensiController::class, 'index'])->name('admin.kelolaabsensi');
     Route::get('/admin/kelolainvestor', [KelolaDataInvestorController::class, 'index'])->name('admin.kelolainvestor');
     Route::get('/admin/buatlaporan', [BuatLaporanController::class, 'index'])->name('admin.buatlaporan');
+    Route::delete('/owner/laporanpenjualan/{id}', [LaporanPenjualanController::class, 'destroy'])->name('owner.laporanpenjualan.destroy');
 
     // Halaman Admin IT 
     Route::get('/adminit/backupdata', [BackupDataController::class, 'index'])->name('adminit.backupdata');
