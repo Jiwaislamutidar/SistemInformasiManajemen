@@ -13,6 +13,7 @@ return new class extends Migration
 {
     Schema::create('pengeluaran', function (Blueprint $table) {
         $table->id();
+        $table->string('type')->default('expense');
         $table->string('kategori');
         $table->decimal('nominal', 15, 2);
         $table->date('tanggal');
@@ -25,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('pengeluarans');
+        Schema::dropIfExists('pengeluaran');
     }
 };

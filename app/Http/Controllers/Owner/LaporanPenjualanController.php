@@ -12,12 +12,21 @@ class LaporanPenjualanController extends Controller
     /**
      * Menampilkan halaman rekap laporan penjualan untuk Owner.
      */
-    public function index()
+    public function index(Request $request)
     {
         // Mengambil semua data penjualan diurutkan dari yang terbaru
-        $penjualans = Penjualan::latest()->get();
+        $query = Penjualan::latest();
+        if ($request->filled('bulan')) {
+            $query->whereBetween('created_at', [$request->bulan . '-01 00:00:00', date('Y-m-t 23:59:59', strtotime($request->bulan . '-01'))]);
+        }
+        $penjualans = $query->get();
 
-        return view('owner.laporanpenjualan', compact('penjualans'));
+        return view('owner.laporanpenjualan', [
+            'penjualans' => $penjualans,
+            'totalTransaksi' => $penjualans->count(),
+            'totalOmzet' => $penjualans->sum('harga_jual'),
+            'rataHarga' => $penjualans->count() ? $penjualans->avg('harga_jual') : 0,
+        ]);
     }
 
     public function destroy($id)

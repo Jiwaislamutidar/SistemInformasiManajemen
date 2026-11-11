@@ -54,8 +54,8 @@
             <a href="{{ route('admin.inputpenjualan') }}" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition {{ request()->routeIs('admin.inputpenjualan') ? 'bg-[#D4AF37] text-gray-950 font-bold shadow-md' : 'text-gray-300 hover:bg-white/10 hover:text-white' }}">
                 <span>🚗</span> <span>Input Penjualan</span>
             </a>
-            <a href="{{ route('admin.inputpengeluaran') }}" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition {{ request()->routeIs('admin.inputpengeluaran') ? 'bg-[#D4AF37] text-gray-950 font-bold shadow-md' : 'text-gray-300 hover:bg-white/10 hover:text-white' }}">
-                <span>💵</span> <span>Input Pengeluaran</span>
+            <a href="{{ route('admin.inputkeuangan') }}" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition {{ request()->routeIs('admin.inputkeuangan') ? 'bg-[#D4AF37] text-gray-950 font-bold shadow-md' : 'text-gray-300 hover:bg-white/10 hover:text-white' }}">
+                <span>💵</span> <span>Input Keuangan</span>
             </a>
             <a href="{{ route('admin.kelolamobil') }}" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition {{ request()->routeIs('admin.kelolamobil') ? 'bg-[#D4AF37] text-gray-950 font-bold shadow-md' : 'text-gray-300 hover:bg-white/10 hover:text-white' }}">
                 <span>🚙</span> <span>Kelola Mobil & Stok</span>

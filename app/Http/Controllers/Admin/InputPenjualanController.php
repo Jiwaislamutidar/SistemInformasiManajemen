@@ -15,13 +15,13 @@ class InputPenjualanController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'unit_mobil' => 'required|string',
-            'nama_pembeli' => 'required|string',
-            'harga_jual' => 'required|numeric',
-            'metode_pembayaran' => 'required|string',
-            'jumlah_dp' => 'nullable|numeric',
-            'sales_executive' => 'required|string',
+        $data = $request->validate([
+            'unit_mobil' => 'required|string|in:Chery Tiggo 5X Classic,Chery Tiggo 5X Summit,Chery Omoda 5 Z,Chery Omoda 5 RZ,Chery Tiggo 7 Pro Premium,Chery Tiggo 8 Pro Premium,Chery Omoda E5 Electric',
+            'nama_pembeli' => 'required|string|max:255',
+            'harga_jual' => 'required|numeric|min:0',
+            'metode_pembayaran' => 'required|in:Cash,Kredit',
+            'jumlah_dp' => 'nullable|numeric|min:0|required_if:metode_pembayaran,Kredit',
+            'sales_executive' => 'required|in:Sukayat,Bela,Ambar,Eki,Daido,Ridho,Nella,Adi,Lena',
             'bukti_deal' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
@@ -31,12 +31,12 @@ class InputPenjualanController extends Controller
         }
 
         Penjualan::create([
-            'unit_mobil' => $request->unit_mobil,
-            'nama_pembeli' => $request->nama_pembeli,
-            'harga_jual' => $request->harga_jual,
-            'metode_pembayaran' => $request->metode_pembayaran,
-            'jumlah_dp' => $request->metode_pembayaran == 'Kredit' ? $request->jumlah_dp : null,
-            'sales_executive' => $request->sales_executive,
+            'unit_mobil' => $data['unit_mobil'],
+            'nama_pembeli' => $data['nama_pembeli'],
+            'harga_jual' => $data['harga_jual'],
+            'metode_pembayaran' => $data['metode_pembayaran'],
+            'jumlah_dp' => $data['metode_pembayaran'] === 'Kredit' ? ($data['jumlah_dp'] ?? null) : null,
+            'sales_executive' => $data['sales_executive'],
             'bukti_deal' => $path,
         ]);
 

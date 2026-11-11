@@ -15,7 +15,7 @@ use App\Http\Controllers\Owner\DataInvestorController;
 use App\Http\Controllers\Admin\DashboardAdminController;
 use App\Http\Controllers\Admin\KirimLaporanController;
 use App\Http\Controllers\Admin\InputPenjualanController;
-use App\Http\Controllers\Admin\InputPengeluaranController;
+use App\Http\Controllers\Admin\InputKeuanganController;
 use App\Http\Controllers\Admin\KelolaMobilController;
 use App\Http\Controllers\Admin\KelolaKaryawanController;
 use App\Http\Controllers\Admin\KelolaAbsensiController;
@@ -62,7 +62,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/admin/kirimlaporan', [KirimLaporanController::class, 'index'])->name('admin.kirimlaporan');
     Route::get('/admin/inputpenjualan', [InputPenjualanController::class, 'index'])->name('admin.inputpenjualan');
     Route::post('/admin/inputpenjualan/store', [InputPenjualanController::class, 'store'])->name('admin.penjualan.store');
-    Route::get('/admin/inputpengeluaran', [InputPengeluaranController::class, 'index'])->name('admin.inputpengeluaran');
+    Route::get('/admin/inputkeuangan', [InputKeuanganController::class, 'index'])->name('admin.inputkeuangan');
+    Route::post('/admin/inputkeuangan', [InputKeuanganController::class, 'store'])->name('admin.keuangan.store');
     Route::get('/admin/kelolamobil', [KelolaMobilController::class, 'index'])->name('admin.kelolamobil');
     Route::get('/admin/kelolakaryawan', [KelolaKaryawanController::class, 'index'])->name('admin.kelolakaryawan');
     Route::get('/admin/kelolaabsensi', [KelolaAbsensiController::class, 'index'])->name('admin.kelolaabsensi');
