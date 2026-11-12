@@ -53,6 +53,9 @@ Route::middleware(['auth'])->group(function () {
     // Halaman Owner
     Route::get('/owner/profit', [ProfitController::class, 'index'])->name('owner.profit');
     Route::get('/owner/laporankeuangan', [LaporanKeuanganController::class, 'index'])->name('owner.laporankeuangan');
+    Route::delete('/owner/laporankeuangan/all', [LaporanKeuanganController::class, 'destroyAll'])->name('owner.laporankeuangan.destroyAll');
+    Route::delete('/owner/laporankeuangan/{type}/{id}', [LaporanKeuanganController::class, 'destroy'])
+        ->whereIn('type', ['sale', 'expense'])->whereNumber('id')->name('owner.laporankeuangan.destroy');
     Route::get('/owner/laporanpenjualan', [LaporanPenjualanController::class, 'index'])->name('owner.laporanpenjualan');
     Route::get('/owner/kinerjadivisi', [KinerjaDivisiController::class, 'index'])->name('owner.kinerjadivisi');
     Route::get('/owner/monitoringkaryawan', [MonitoringKaryawanController::class, 'index'])->name('owner.monitoringkaryawan');
@@ -60,15 +63,25 @@ Route::middleware(['auth'])->group(function () {
 
     // Halaman Admin 
     Route::get('/admin/kirimlaporan', [KirimLaporanController::class, 'index'])->name('admin.kirimlaporan');
+    Route::post('/admin/kirimlaporan', [KirimLaporanController::class, 'store'])->name('admin.kirimlaporan.store');
+    Route::get('/admin/kirimlaporan/{laporan}/download', [KirimLaporanController::class, 'download'])->name('admin.kirimlaporan.download');
     Route::get('/admin/inputpenjualan', [InputPenjualanController::class, 'index'])->name('admin.inputpenjualan');
     Route::post('/admin/inputpenjualan/store', [InputPenjualanController::class, 'store'])->name('admin.penjualan.store');
     Route::get('/admin/inputkeuangan', [InputKeuanganController::class, 'index'])->name('admin.inputkeuangan');
     Route::post('/admin/inputkeuangan', [InputKeuanganController::class, 'store'])->name('admin.keuangan.store');
     Route::get('/admin/kelolamobil', [KelolaMobilController::class, 'index'])->name('admin.kelolamobil');
+    Route::post('/admin/kelolamobil', [KelolaMobilController::class, 'store'])->name('admin.kelolamobil.store');
+    Route::put('/admin/kelolamobil/{mobil}', [KelolaMobilController::class, 'update'])->name('admin.kelolamobil.update');
+    Route::delete('/admin/kelolamobil/{mobil}', [KelolaMobilController::class, 'destroy'])->name('admin.kelolamobil.destroy');
     Route::get('/admin/kelolakaryawan', [KelolaKaryawanController::class, 'index'])->name('admin.kelolakaryawan');
+    Route::post('/admin/kelolakaryawan', [KelolaKaryawanController::class, 'store'])->name('admin.kelolakaryawan.store');
+    Route::get('/admin/kelolakaryawan/{karyawan}', [KelolaKaryawanController::class, 'show'])->name('admin.kelolakaryawan.show');
+    Route::put('/admin/kelolakaryawan/{karyawan}', [KelolaKaryawanController::class, 'update'])->name('admin.kelolakaryawan.update');
+    Route::delete('/admin/kelolakaryawan/{karyawan}', [KelolaKaryawanController::class, 'destroy'])->name('admin.kelolakaryawan.destroy');
     Route::get('/admin/kelolaabsensi', [KelolaAbsensiController::class, 'index'])->name('admin.kelolaabsensi');
     Route::get('/admin/kelolainvestor', [KelolaDataInvestorController::class, 'index'])->name('admin.kelolainvestor');
     Route::get('/admin/buatlaporan', [BuatLaporanController::class, 'index'])->name('admin.buatlaporan');
+    Route::delete('/owner/laporanpenjualan/all', [LaporanPenjualanController::class, 'destroyAll'])->name('owner.laporanpenjualan.destroyAll');
     Route::delete('/owner/laporanpenjualan/{id}', [LaporanPenjualanController::class, 'destroy'])->name('owner.laporanpenjualan.destroy');
 
     // Halaman Admin IT 

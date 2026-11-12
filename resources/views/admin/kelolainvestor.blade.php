@@ -26,7 +26,7 @@
                         <tbody class="divide-y divide-gray-100 text-gray-600">
                             <tr>
                                 <td class="p-3 font-bold text-gray-900">Ir. Ahmad Subarjo</td>
-                                <td class="p-3">Toyota Avanza (B 1234 ABC)</td>
+                                <td class="p-3">Chery Tiggo 5X Classic</td>
                                 <td class="p-3 font-semibold">Rp 150.000.000</td>
                                 <td class="p-3"><span class="px-2 py-0.5 bg-amber-100 text-amber-800 rounded font-bold">60% Investor / 40% Dealer</span></td>
                                 <td class="p-3 text-center space-x-2">

@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Owner;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Penjualan;
+use App\Models\Mobil;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
 
 class LaporanPenjualanController extends Controller
 {
@@ -26,6 +28,7 @@ class LaporanPenjualanController extends Controller
             'totalTransaksi' => $penjualans->count(),
             'totalOmzet' => $penjualans->sum('harga_jual'),
             'rataHarga' => $penjualans->count() ? $penjualans->avg('harga_jual') : 0,
+            'mobils' => Mobil::orderBy('merk_tipe')->get(),
         ]);
     }
 
@@ -37,8 +40,29 @@ class LaporanPenjualanController extends Controller
             Storage::disk('public')->delete($penjualan->bukti_deal);
         }
 
-        $penjualan->delete();
+        DB::transaction(function () use ($penjualan) {
+            if ($penjualan->mobil_id && ($mobil = Mobil::lockForUpdate()->find($penjualan->mobil_id))) {
+                $mobil->increment('stok');
+                $mobil->update(['status' => 'Ready']);
+            }
+            $penjualan->delete();
+        });
 
         return redirect()->route('owner.laporanpenjualan')->with('success', 'Data transaksi berhasil dihapus!');
+    }
+
+    public function destroyAll()
+    {
+        DB::transaction(function () {
+            Penjualan::query()->with('mobil')->get()->each(function (Penjualan $penjualan) {
+                if ($penjualan->mobil) {
+                    $penjualan->mobil->increment('stok');
+                    $penjualan->mobil->update(['status' => 'Ready']);
+                }
+            });
+            Penjualan::truncate();
+        });
+
+        return redirect()->route('owner.laporanpenjualan')->with('success', 'Seluruh transaksi berhasil dihapus dan nomor transaksi direset ke 1.');
     }
 }

@@ -8,19 +8,20 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('mobil', function (Blueprint $table) {
+        Schema::create('mobils', function (Blueprint $table) {
             $table->id();
-            $table->string('merek');
-            $table->string('tipe');
+            $table->string('merk_tipe');
+            $table->unsignedSmallInteger('tahun');
             $table->decimal('harga_beli', 15, 2);
             $table->decimal('harga_jual', 15, 2);
             $table->integer('stok')->default(0);
+            $table->string('status')->default('Habis');
             $table->timestamps();
         });
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('mobil');
+        Schema::dropIfExists('mobils');
     }
 };

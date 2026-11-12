@@ -10,6 +10,8 @@ class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
+        $this->call([MasterDataSeeder::class, MobilSeeder::class]);
+
         // 1. Akun Admin
         User::updateOrCreate(
             ['email' => 'admin@dealer.com'],

@@ -11,6 +11,7 @@ class Penjualan extends Model
 
     protected $fillable = [
         'unit_mobil',
+        'mobil_id',
         'nama_pembeli',
         'harga_jual',
         'metode_pembayaran',
@@ -18,4 +19,9 @@ class Penjualan extends Model
         'sales_executive',
         'bukti_deal'
     ];
+
+    public function mobil()
+    {
+        return $this->belongsTo(Mobil::class);
+    }
 }
