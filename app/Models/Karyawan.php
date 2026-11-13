@@ -11,7 +11,7 @@ class Karyawan extends Model
 
     protected $table = 'karyawan';
 
-    protected $fillable = ['nip', 'nama', 'telepon', 'divisi_id', 'jabatan_id', 'gaji_pokok', 'status'];
+    protected $fillable = ['nip', 'nama', 'telepon', 'divisi_id', 'jabatan_id', 'gaji_pokok', 'status', 'shift'];
 
     protected $casts = ['gaji_pokok' => 'decimal:2'];
 

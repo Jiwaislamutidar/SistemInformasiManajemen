@@ -18,6 +18,11 @@ class MonitoringKaryawanController extends Controller
         return view('owner.monitoringkaryawan', [
             'karyawans' => $karyawans,
             'tanggal' => $tanggal,
+            'shiftLabels' => [
+                'pagi' => 'Shift Pagi (08:00 - 16:00)',
+                'siang' => 'Shift Siang (13:00 - 21:00)',
+                'libur' => 'Libur / Off',
+            ],
             'totalKaryawan' => $karyawans->count(),
             'hadir' => $statusHariIni->filter(fn ($status) => $status === 'hadir')->count(),
             'izin' => $statusHariIni->filter(fn ($status) => in_array($status, ['izin', 'sakit'], true))->count(),

@@ -18,7 +18,7 @@ use App\Http\Controllers\Admin\InputPenjualanController;
 use App\Http\Controllers\Admin\InputKeuanganController;
 use App\Http\Controllers\Admin\KelolaMobilController;
 use App\Http\Controllers\Admin\KelolaKaryawanController;
-use App\Http\Controllers\Admin\KelolaAbsensiController;
+use App\Http\Controllers\Admin\JadwalShiftController;
 use App\Http\Controllers\Admin\KelolaDataInvestorController;
 use App\Http\Controllers\Admin\BuatLaporanController;
 
@@ -78,7 +78,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/admin/kelolakaryawan/{karyawan}', [KelolaKaryawanController::class, 'show'])->name('admin.kelolakaryawan.show');
     Route::put('/admin/kelolakaryawan/{karyawan}', [KelolaKaryawanController::class, 'update'])->name('admin.kelolakaryawan.update');
     Route::delete('/admin/kelolakaryawan/{karyawan}', [KelolaKaryawanController::class, 'destroy'])->name('admin.kelolakaryawan.destroy');
-    Route::get('/admin/kelolaabsensi', [KelolaAbsensiController::class, 'index'])->name('admin.kelolaabsensi');
+    Route::get('/admin/jadwalshift', [JadwalShiftController::class, 'index'])->name('admin.jadwalshift');
+    Route::put('/admin/jadwalshift/{karyawan}', [JadwalShiftController::class, 'update'])->name('admin.jadwalshift.update');
     Route::get('/admin/kelolainvestor', [KelolaDataInvestorController::class, 'index'])->name('admin.kelolainvestor');
     Route::get('/admin/buatlaporan', [BuatLaporanController::class, 'index'])->name('admin.buatlaporan');
     Route::delete('/owner/laporanpenjualan/all', [LaporanPenjualanController::class, 'destroyAll'])->name('owner.laporanpenjualan.destroyAll');

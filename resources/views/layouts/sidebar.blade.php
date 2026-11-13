@@ -63,8 +63,8 @@
             <a href="{{ route('admin.kelolakaryawan') }}" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition {{ request()->routeIs('admin.kelolakaryawan') ? 'bg-[#D4AF37] text-gray-950 font-bold shadow-md' : 'text-gray-300 hover:bg-white/10 hover:text-white' }}">
                 <span>👥</span> <span>Kelola Data Karyawan</span>
             </a>
-            <a href="{{ route('admin.kelolaabsensi') }}" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition {{ request()->routeIs('admin.kelolaabsensi') ? 'bg-[#D4AF37] text-gray-950 font-bold shadow-md' : 'text-gray-300 hover:bg-white/10 hover:text-white' }}">
-                <span>📋</span> <span>Kelola Absensi</span>
+            <a href="{{ route('admin.jadwalshift') }}" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition {{ request()->routeIs('admin.jadwalshift') ? 'bg-[#D4AF37] text-gray-950 font-bold shadow-md' : 'text-gray-300 hover:bg-white/10 hover:text-white' }}">
+                <span>📋</span> <span>Jadwal Shift Karyawan</span>
             </a>
             <a href="{{ route('admin.kelolainvestor') }}" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition {{ request()->routeIs('admin.kelolainvestor') ? 'bg-[#D4AF37] text-gray-950 font-bold shadow-md' : 'text-gray-300 hover:bg-white/10 hover:text-white' }}">
                 <span>🤝</span> <span>Kelola Data Investor</span>
