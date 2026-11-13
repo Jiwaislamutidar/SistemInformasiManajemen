@@ -15,7 +15,7 @@ class InputPenjualanController extends Controller
     public function index()
     {
         return view('admin.inputpenjualan', [
-            'mobils' => Mobil::whereIn('merk_tipe', Mobil::CHERY_MODELS)->where('stok', '>', 0)->orderBy('merk_tipe')->get(),
+            'mobils' => Mobil::where('stok', '>', 0)->orderBy('merk_tipe')->get(),
             'sales' => Karyawan::where('status', 'aktif')->orderBy('nama')->get(),
         ]);
     }
@@ -23,7 +23,7 @@ class InputPenjualanController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'mobil_id' => ['required', 'integer', Rule::exists('mobils', 'id')->where(fn ($query) => $query->whereIn('merk_tipe', Mobil::CHERY_MODELS)->where('stok', '>', 0))],
+            'mobil_id' => ['required', 'integer', Rule::exists('mobils', 'id')->where(fn ($query) => $query->where('stok', '>', 0))],
             'nama_pembeli' => 'required|string|max:255',
             'harga_jual' => 'required|numeric|min:0',
             'metode_pembayaran' => 'required|in:Cash,Kredit',
