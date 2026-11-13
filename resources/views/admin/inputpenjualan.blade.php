@@ -15,6 +15,66 @@
                 <div class="flex flex-col gap-3 border-t border-[#d9dfda] pt-5 sm:flex-row sm:justify-end md:col-span-2"><button type="reset" class="rounded-lg border border-[#10261C] px-5 py-3 text-sm font-semibold text-[#10261C]">Reset</button><button type="submit" class="rounded-lg bg-[#D4AF37] px-5 py-3 text-sm font-semibold text-[#10261C]">Simpan Transaksi</button></div>
             </form>
         </div>
+        <div class="mt-6 overflow-hidden rounded-xl border border-[#d9dfda] bg-white shadow-sm">
+            <div class="border-b border-[#d9dfda] p-5 sm:p-6">
+                <div class="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
+                    <div>
+                        <p class="text-xs font-semibold uppercase tracking-[.18em] text-[#D4AF37]">Riwayat</p>
+                        <h2 class="text-lg font-semibold text-[#10261C]">Riwayat Transaksi Penjualan</h2>
+                    </div>
+                    <span class="text-sm text-gray-500">{{ $penjualans->count() }} transaksi ditemukan</span>
+                </div>
+                <form method="GET" class="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-5">
+                    <div>
+                        <label for="tanggal" class="mb-1 block text-xs font-semibold text-[#10261C]">Tanggal Spesifik</label>
+                        <input id="tanggal" type="date" name="tanggal" value="{{ request('tanggal') }}" class="w-full rounded-lg border border-[#b9c5bd] px-3 py-2 text-sm">
+                    </div>
+                    <div>
+                        <label for="dari" class="mb-1 block text-xs font-semibold text-[#10261C]">Dari Tanggal</label>
+                        <input id="dari" type="date" name="dari" value="{{ request('dari') }}" class="w-full rounded-lg border border-[#b9c5bd] px-3 py-2 text-sm">
+                    </div>
+                    <div>
+                        <label for="sampai" class="mb-1 block text-xs font-semibold text-[#10261C]">Sampai Tanggal</label>
+                        <input id="sampai" type="date" name="sampai" value="{{ request('sampai') }}" class="w-full rounded-lg border border-[#b9c5bd] px-3 py-2 text-sm">
+                    </div>
+                    <div>
+                        <label for="bulan" class="mb-1 block text-xs font-semibold text-[#10261C]">Bulan</label>
+                        <select id="bulan" name="bulan" class="w-full rounded-lg border border-[#b9c5bd] bg-white px-3 py-2 text-sm">
+                            <option value="">Semua Bulan</option>
+                            @foreach([1 => 'Januari', 2 => 'Februari', 3 => 'Maret', 4 => 'April', 5 => 'Mei', 6 => 'Juni', 7 => 'Juli', 8 => 'Agustus', 9 => 'September', 10 => 'Oktober', 11 => 'November', 12 => 'Desember'] as $number => $name)
+                                <option value="{{ $number }}" @selected((string) request('bulan') === (string) $number)>{{ $name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="flex items-end gap-2">
+                        <button type="submit" class="flex-1 rounded-lg bg-[#10261C] px-4 py-2 text-sm font-semibold text-white">Terapkan</button>
+                        <a href="{{ route('admin.inputpenjualan') }}" class="rounded-lg border border-[#10261C] px-4 py-2 text-sm font-semibold text-[#10261C]">Reset</a>
+                    </div>
+                </form>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="min-w-[850px] w-full text-left text-sm">
+                    <thead class="bg-[#10261C] text-xs uppercase tracking-wider text-white">
+                        <tr><th class="px-4 py-3">Tanggal</th><th class="px-4 py-3">Pembeli</th><th class="px-4 py-3">Unit Chery</th><th class="px-4 py-3">Pembayaran</th><th class="px-4 py-3">Sales Executive</th><th class="px-4 py-3 text-right">Harga Deal</th><th class="px-4 py-3">Aksi</th></tr>
+                    </thead>
+                    <tbody class="divide-y divide-[#e3e8e4]">
+                        @forelse($penjualans as $item)
+                            <tr class="hover:bg-[#f8faf8]">
+                                <td class="whitespace-nowrap px-4 py-3">{{ optional($item->created_at)->format('d/m/Y H:i') }}</td>
+                                <td class="px-4 py-3">{{ $item->nama_pembeli }}</td>
+                                <td class="px-4 py-3 font-semibold text-[#10261C]">{{ $item->unit_mobil }}</td>
+                                <td class="px-4 py-3">{{ $item->metode_pembayaran }}</td>
+                                <td class="px-4 py-3">{{ $item->sales_executive }}</td>
+                                <td class="whitespace-nowrap px-4 py-3 text-right font-semibold">Rp {{ number_format($item->harga_jual, 0, ',', '.') }}</td>
+                                <td class="px-4 py-3 text-gray-400">-</td>
+                            </tr>
+                        @empty
+                            <tr><td colspan="7" class="px-4 py-8 text-center text-gray-500">Belum ada transaksi sesuai filter.</td></tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div></div>
     <script>(()=>{const u=document.getElementById('unit_mobil'),p=document.getElementById('harga_jual'),m=document.getElementById('metodePembayaran'),d=document.getElementById('wrapperDp'),i=document.getElementById('inputDp');u.addEventListener('change',()=>{p.value=u.options[u.selectedIndex].dataset.price||''});const t=()=>{const c=m.value==='Kredit';d.classList.toggle('hidden',!c);i.required=c;if(!c)i.value=''};m.addEventListener('change',t);t()})()</script>
 </x-app-layout>

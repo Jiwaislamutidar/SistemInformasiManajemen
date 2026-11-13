@@ -16,10 +16,25 @@ class LaporanPenjualanController extends Controller
      */
     public function index(Request $request)
     {
-        // Mengambil semua data penjualan diurutkan dari yang terbaru
-        $query = Penjualan::latest();
-        if ($request->filled('bulan')) {
-            $query->whereBetween('created_at', [$request->bulan . '-01 00:00:00', date('Y-m-t 23:59:59', strtotime($request->bulan . '-01'))]);
+        $filters = $request->validate([
+            'tanggal' => ['nullable', 'date'],
+            'dari' => ['nullable', 'date'],
+            'sampai' => ['nullable', 'date', 'after_or_equal:dari'],
+            'bulan' => ['nullable', 'integer', 'between:1,12'],
+        ]);
+
+        $query = Penjualan::query()->latest();
+        if (! empty($filters['tanggal'])) {
+            $query->whereDate('created_at', $filters['tanggal']);
+        }
+        if (! empty($filters['dari'])) {
+            $query->whereDate('created_at', '>=', $filters['dari']);
+        }
+        if (! empty($filters['sampai'])) {
+            $query->whereDate('created_at', '<=', $filters['sampai']);
+        }
+        if (! empty($filters['bulan'])) {
+            $query->whereMonth('created_at', $filters['bulan']);
         }
         $penjualans = $query->get();
 

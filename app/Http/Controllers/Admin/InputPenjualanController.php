@@ -12,11 +12,34 @@ use Illuminate\Validation\Rule;
 
 class InputPenjualanController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        $filters = $request->validate([
+            'tanggal' => ['nullable', 'date'],
+            'dari' => ['nullable', 'date'],
+            'sampai' => ['nullable', 'date', 'after_or_equal:dari'],
+            'bulan' => ['nullable', 'integer', 'between:1,12'],
+        ]);
+
+        $query = Penjualan::query()->latest();
+
+        if (! empty($filters['tanggal'])) {
+            $query->whereDate('created_at', $filters['tanggal']);
+        }
+        if (! empty($filters['dari'])) {
+            $query->whereDate('created_at', '>=', $filters['dari']);
+        }
+        if (! empty($filters['sampai'])) {
+            $query->whereDate('created_at', '<=', $filters['sampai']);
+        }
+        if (! empty($filters['bulan'])) {
+            $query->whereMonth('created_at', $filters['bulan']);
+        }
+
         return view('admin.inputpenjualan', [
             'mobils' => Mobil::where('stok', '>', 0)->orderBy('merk_tipe')->get(),
             'sales' => Karyawan::where('status', 'aktif')->orderBy('nama')->get(),
+            'penjualans' => $query->get(),
         ]);
     }
 
