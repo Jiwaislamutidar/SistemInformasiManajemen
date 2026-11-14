@@ -1,7 +1,8 @@
+@php($pageTitle = 'Log Aktivitas & Backup - Dealer Mobil Chery Executive System')
 <x-app-layout>
     <x-slot name="header">
         <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-            <h2 class="text-xl font-bold text-[#10261C]">Log Aktivitas Sistem</h2>
+            <h2 class="text-xl font-bold text-[#10261C]">Log Aktivitas &amp; Backup</h2>
             <form method="POST" action="{{ route('adminit.maintenance.clear-cache') }}">
                 @csrf
                 <button type="submit" class="w-full rounded-xl bg-[#10261C] px-4 py-2.5 text-sm font-bold text-white shadow-sm transition hover:bg-[#183A2A] sm:w-auto">Bersihkan Cache Aplikasi</button>

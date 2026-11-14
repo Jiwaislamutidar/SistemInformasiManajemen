@@ -19,8 +19,7 @@
             <a title="Dashboard Admin IT" href="{{ route('adminit.dashboard') }}" class="nav-item {{ request()->routeIs('adminit.dashboard') ? 'active' : '' }}"><span>⚙️</span><span x-show="!sidebarCollapsed">Dashboard Admin IT</span></a>
             <a title="Kelola Akun & Hak Akses" href="{{ route('adminit.kelolaakun') }}" class="nav-item"><span>👤</span><span x-show="!sidebarCollapsed">Kelola Akun &amp; Hak Akses</span></a>
             <a title="Data Master" href="{{ route('adminit.keloladatamaster') }}" class="nav-item"><span>🗄️</span><span x-show="!sidebarCollapsed">Data Master (Divisi/Jabatan)</span></a>
-            <a title="Backup & Maintenance" href="{{ route('adminit.backupdata') }}" class="nav-item"><span>💾</span><span x-show="!sidebarCollapsed">Backup &amp; Maintenance</span></a>
-            <a title="Log Aktivitas Sistem" href="{{ route('adminit.lihatlogaktivitas') }}" class="nav-item"><span>📜</span><span x-show="!sidebarCollapsed">Log Aktivitas Sistem</span></a>
+            <a title="Log Aktivitas &amp; Backup" href="{{ route('adminit.lihatlogaktivitas') }}" class="nav-item {{ request()->routeIs('adminit.lihatlogaktivitas') ? 'active' : '' }}"><span>📜</span><span x-show="!sidebarCollapsed">Log Aktivitas &amp; Backup</span></a>
         @endif
     </div>
     <div class="border-t border-white/10 bg-black/30 p-4" x-show="!sidebarCollapsed">
