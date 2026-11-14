@@ -73,11 +73,16 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/adminit/backupdata', [AdminItController::class, 'maintenance'])->name('adminit.backupdata');
     Route::post('/adminit/maintenance/clear-cache', [AdminItController::class, 'clearCache'])->name('adminit.maintenance.clear-cache');
     Route::get('/adminit/kelolaakun', [AdminItController::class, 'akun'])->name('adminit.kelolaakun');
-    Route::put('/adminit/kelolaakun/{user}', [AdminItController::class, 'updateAkun'])->name('adminit.kelolaakun.update');
+    Route::put('/adminit/kelolaakun/{user}', [AdminItController::class, 'updateAkun'])->middleware('role:admin_it')->name('adminit.kelolaakun.update');
+    Route::put('/adminit/kelolaakun/{user}/password', [AdminItController::class, 'updatePassword'])->middleware('role:admin_it')->name('adminit.akun.password');
     Route::get('/adminit/keloladatamaster', [AdminItController::class, 'master'])->name('adminit.keloladatamaster');
     Route::post('/adminit/keloladatamaster', [AdminItController::class, 'storeDivisi'])->name('adminit.divisi.store');
     Route::put('/adminit/keloladatamaster/{divisi}', [AdminItController::class, 'updateDivisi'])->name('adminit.divisi.update');
     Route::delete('/adminit/keloladatamaster/{divisi}', [AdminItController::class, 'destroyDivisi'])->name('adminit.divisi.destroy');
+    Route::post('/adminit/keloladatamaster/karyawan', [AdminItController::class, 'storeKaryawan'])->middleware('role:admin_it')->name('adminit.karyawan.store');
+    Route::get('/adminit/keloladatamaster/karyawan/{karyawan}', [AdminItController::class, 'showKaryawan'])->middleware('role:admin_it')->name('adminit.karyawan.show');
+    Route::put('/adminit/keloladatamaster/karyawan/{karyawan}', [AdminItController::class, 'updateKaryawan'])->middleware('role:admin_it')->name('adminit.karyawan.update');
+    Route::delete('/adminit/keloladatamaster/karyawan/{karyawan}', [AdminItController::class, 'destroyKaryawan'])->middleware('role:admin_it')->name('adminit.karyawan.destroy');
     Route::get('/adminit/lihatlogaktivitas', [AdminItController::class, 'log'])->name('adminit.lihatlogaktivitas');
 
     // Fitur Profile bawaan Breeze 

@@ -17,13 +17,13 @@
             <section class="overflow-hidden rounded-2xl border border-[#d9dfda] bg-white shadow-sm">
                 <div class="border-b border-[#d9dfda] p-5"><h3 class="text-sm font-bold uppercase tracking-wider text-[#10261C]">Direktori Karyawan</h3><p class="mt-1 text-xs text-gray-500">Daftar karyawan berdasarkan divisi dan jabatan terbaru.</p></div>
                 <div class="overflow-x-auto">
-                    <table class="w-full min-w-[720px] text-left text-xs">
-                        <thead class="bg-[#10261C] text-[10px] uppercase tracking-wider text-white"><tr><th class="p-3">NIP</th><th class="p-3">Nama Karyawan</th><th class="p-3">Divisi</th><th class="p-3">Jabatan</th><th class="p-3">Telepon</th><th class="p-3">Status</th></tr></thead>
+                    <table class="w-full min-w-[800px] text-left text-xs">
+                        <thead class="bg-[#10261C] text-[10px] uppercase tracking-wider text-white"><tr><th class="p-3">NIP</th><th class="p-3">Nama Karyawan</th><th class="p-3">Divisi</th><th class="p-3">Jabatan</th><th class="p-3">Telepon</th><th class="p-3">Gaji</th><th class="p-3">Status</th></tr></thead>
                         <tbody class="divide-y divide-gray-100">
                             @forelse($karyawans as $karyawan)
-                                <tr class="hover:bg-[#f7f9f7]"><td class="p-3">{{ $karyawan->nip ?: '-' }}</td><td class="p-3 font-semibold text-[#10261C]">{{ $karyawan->nama }}</td><td class="p-3">{{ $karyawan->divisi?->nama_divisi ?: '-' }}</td><td class="p-3">{{ $karyawan->jabatan?->nama_jabatan ?: '-' }}</td><td class="p-3">{{ $karyawan->telepon ?: '-' }}</td><td class="p-3"><span class="rounded px-2 py-1 font-bold {{ $karyawan->status === 'aktif' ? 'bg-emerald-100 text-emerald-800' : 'bg-gray-100 text-gray-700' }}">{{ ucfirst($karyawan->status) }}</span></td></tr>
+                                <tr class="hover:bg-[#f7f9f7]"><td class="p-3">{{ $karyawan->nip ?: '-' }}</td><td class="p-3 font-semibold text-[#10261C]">{{ $karyawan->nama }}</td><td class="p-3">{{ $karyawan->divisi?->nama_divisi ?: '-' }}</td><td class="p-3">{{ $karyawan->jabatan?->nama_jabatan ?: '-' }}</td><td class="p-3">{{ $karyawan->telepon ?: '-' }}</td><td class="p-3 whitespace-nowrap">Rp {{ number_format($karyawan->gaji ?? 0, 0, ',', '.') }}</td><td class="p-3"><span class="rounded px-2 py-1 font-bold {{ $karyawan->status === 'aktif' ? 'bg-emerald-100 text-emerald-800' : 'bg-gray-100 text-gray-700' }}">{{ ucfirst($karyawan->status) }}</span></td></tr>
                             @empty
-                                <tr><td colspan="6" class="p-10 text-center text-gray-500">Belum ada data karyawan.</td></tr>
+                                <tr><td colspan="7" class="p-10 text-center text-gray-500">Belum ada data karyawan.</td></tr>
                             @endforelse
                         </tbody>
                     </table>

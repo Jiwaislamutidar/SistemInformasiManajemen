@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Penjualan;
 use App\Models\Mobil;
 use App\Models\Karyawan;
+use App\Models\Divisi;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 
@@ -38,7 +39,7 @@ class InputPenjualanController extends Controller
 
         return view('admin.inputpenjualan', [
             'mobils' => Mobil::where('stok', '>', 0)->orderBy('merk_tipe')->get(),
-            'sales' => Karyawan::where('status', 'aktif')->orderBy('nama')->get(),
+            'sales' => Karyawan::where('status', 'aktif')->whereHas('divisi', fn ($query) => $query->where('nama_divisi', 'Sales'))->with('jabatan')->orderBy('nama')->get(),
             'penjualans' => $query->get(),
         ]);
     }
@@ -51,7 +52,7 @@ class InputPenjualanController extends Controller
             'harga_jual' => 'required|numeric|min:0',
             'metode_pembayaran' => 'required|in:Cash,Kredit',
             'jumlah_dp' => 'nullable|numeric|min:0|required_if:metode_pembayaran,Kredit',
-            'sales_executive' => ['required', 'string', 'max:120', Rule::exists('karyawan', 'nama')->where(fn ($query) => $query->where('status', 'aktif'))],
+            'sales_executive' => ['required', 'string', 'max:120', Rule::exists('karyawan', 'nama')->where(fn ($query) => $query->where('status', 'aktif')->whereIn('divisi_id', Divisi::where('nama_divisi', 'Sales')->pluck('id')))],
             'bukti_deal' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
         ]);
 

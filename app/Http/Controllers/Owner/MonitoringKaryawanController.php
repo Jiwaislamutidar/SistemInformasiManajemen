@@ -11,7 +11,11 @@ class MonitoringKaryawanController extends Controller
 {
     public function index()
     {
-        $karyawans = Karyawan::with(['divisi', 'jabatan'])->orderBy('nama')->get();
+        $karyawans = Karyawan::query()
+            ->select(['karyawan.*', 'karyawan.gaji_pokok as gaji'])
+            ->with(['divisi', 'jabatan'])
+            ->orderBy('nama')
+            ->get();
 
         return view('owner.monitoringkaryawan', [
             'karyawans' => $karyawans,

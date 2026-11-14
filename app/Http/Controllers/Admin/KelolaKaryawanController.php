@@ -4,32 +4,36 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Divisi;
-use App\Models\Jabatan;
 use App\Models\Karyawan;
-use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
+use App\Http\Requests\KaryawanRequest;
+use App\Models\Jabatan;
+use App\Services\KaryawanService;
 
 class KelolaKaryawanController extends Controller
 {
     public function index()
     {
         return view('admin.kelolakaryawan', [
-            'karyawans' => Karyawan::with(['divisi', 'jabatan'])->latest()->get(),
+            'karyawans' => Karyawan::query()
+                ->select(['karyawan.*', 'karyawan.gaji_pokok as gaji'])
+                ->with(['divisi', 'jabatan'])
+                ->latest()
+                ->get(),
             'divisis' => Divisi::whereIn('nama_divisi', Divisi::allowedNames())->orderBy('nama_divisi')->get(),
             'jabatans' => Jabatan::whereIn('nama_jabatan', Jabatan::allowedNames())->orderBy('nama_jabatan')->get(),
         ]);
     }
 
-    public function store(Request $request)
+    public function store(KaryawanRequest $request, KaryawanService $service)
     {
-        Karyawan::create($this->validated($request));
+        $service->save($request->validated());
 
         return redirect()->route('admin.kelolakaryawan')->with('success', 'Data karyawan berhasil ditambahkan.');
     }
 
-    public function update(Request $request, Karyawan $karyawan)
+    public function update(KaryawanRequest $request, Karyawan $karyawan, KaryawanService $service)
     {
-        $karyawan->update($this->validated($request, $karyawan));
+        $service->save($request->validated(), $karyawan);
 
         return redirect()->route('admin.kelolakaryawan')->with('success', 'Data karyawan berhasil diperbarui.');
     }
@@ -39,23 +43,11 @@ class KelolaKaryawanController extends Controller
         return view('admin.kelolakaryawan-detail', ['karyawan' => $karyawan->load(['divisi', 'jabatan', 'absensi' => fn ($query) => $query->latest('tanggal')->limit(10)])]);
     }
 
-    public function destroy(Karyawan $karyawan)
+    public function destroy(Karyawan $karyawan, KaryawanService $service)
     {
-        $karyawan->delete();
+        $service->delete($karyawan);
 
         return redirect()->route('admin.kelolakaryawan')->with('success', 'Data karyawan berhasil dihapus.');
     }
 
-    private function validated(Request $request, ?Karyawan $karyawan = null): array
-    {
-        return $request->validate([
-            'nip' => ['nullable', 'string', 'max:50', Rule::unique('karyawan', 'nip')->ignore($karyawan)],
-            'nama' => ['required', 'string', 'max:120'],
-            'telepon' => ['nullable', 'string', 'max:30'],
-            'divisi_id' => ['required', 'integer', Rule::exists('divisi', 'id')->where(fn ($query) => $query->whereIn('nama_divisi', Divisi::allowedNames()))],
-            'jabatan_id' => ['required', 'integer', Rule::exists('jabatan', 'id')->where(fn ($query) => $query->whereIn('nama_jabatan', Jabatan::allowedNames()))],
-            'gaji_pokok' => ['required', 'numeric', 'min:0'],
-            'status' => ['required', 'in:aktif,nonaktif'],
-        ]);
-    }
 }

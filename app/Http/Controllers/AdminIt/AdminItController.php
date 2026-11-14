@@ -4,7 +4,13 @@ namespace App\Http\Controllers\AdminIt;
 
 use App\Http\Controllers\Controller;
 use App\Models\Divisi;
+use App\Models\Jabatan;
+use App\Models\Karyawan;
 use App\Models\User;
+use App\Http\Requests\KaryawanRequest;
+use App\Services\KaryawanService;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
@@ -54,16 +60,83 @@ class AdminItController extends Controller
             'status' => ['required', Rule::in(['aktif', 'nonaktif'])],
         ]);
 
+        if ($user->is(auth()->user())) {
+            $validated['role'] = $user->role;
+            $validated['status'] = 'aktif';
+        }
+
         $user->update($validated);
 
         return back()->with('success', "Akun {$user->nama} berhasil diperbarui.");
+    }
+
+    public function updatePassword(Request $request, User $user)
+    {
+        $validator = Validator::make($request->all(), [
+            'password' => ['required', 'string', 'min:8', 'same:password_confirmation'],
+            'password_confirmation' => ['required', 'string'],
+        ], [
+            'password.required' => 'Password baru wajib diisi.',
+            'password.min' => 'Password baru minimal 8 karakter.',
+            'password.same' => 'Konfirmasi password harus sama dengan password baru.',
+            'password_confirmation.required' => 'Konfirmasi password wajib diisi.',
+        ]);
+        if ($validator->fails()) {
+            return back()->withErrors($validator)->withInput(['password_user_id' => $user->id]);
+        }
+        $validated = $validator->validated();
+
+        $user->update(['password' => Hash::make($validated['password'])]);
+
+        if (Schema::hasTable('log_aktivitas')) {
+            DB::table('log_aktivitas')->insert([
+                'user_id' => auth()->id(),
+                'aksi' => "Mengubah password akun {$user->nama}",
+                'waktu' => now(),
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+        }
+
+        return back()->with('success', "Password akun {$user->nama} berhasil diubah.");
     }
 
     public function master()
     {
         return view('adminit.keloladatamaster', [
             'divisis' => Divisi::query()->withCount('karyawans')->orderBy('nama_divisi')->get(),
+            'karyawans' => Karyawan::with(['divisi', 'jabatan'])->latest()->get(),
+            'jabatans' => Jabatan::whereIn('nama_jabatan', Jabatan::allowedNames())->orderBy('nama_jabatan')->get(),
         ]);
+    }
+
+    public function storeKaryawan(KaryawanRequest $request, KaryawanService $service)
+    {
+        $service->save($request->validated());
+
+        return back()->with('success', 'Data karyawan berhasil ditambahkan.');
+    }
+
+    public function updateKaryawan(KaryawanRequest $request, Karyawan $karyawan, KaryawanService $service)
+    {
+        $service->save($request->validated(), $karyawan);
+
+        return back()->with('success', 'Data karyawan berhasil diperbarui.');
+    }
+
+    public function showKaryawan(Karyawan $karyawan)
+    {
+        return view('admin.kelolakaryawan-detail', [
+            'karyawan' => $karyawan->load(['divisi', 'jabatan', 'absensi' => fn ($query) => $query->latest('tanggal')->limit(10)]),
+            'backRoute' => 'adminit.keloladatamaster',
+        ]);
+    }
+
+    public function destroyKaryawan(Karyawan $karyawan, KaryawanService $service)
+    {
+        $service->delete($karyawan);
+
+        return back()->with('success', 'Data karyawan berhasil dihapus.');
     }
 
     public function storeDivisi(Request $request)
