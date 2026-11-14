@@ -10,6 +10,7 @@ use App\Http\Controllers\Owner\LaporanPenjualanController;
 use App\Http\Controllers\Owner\KinerjaDivisiController;
 use App\Http\Controllers\Owner\MonitoringKaryawanController;
 use App\Http\Controllers\Owner\DataInvestorController;
+use App\Http\Controllers\Owner\LaporanMasukController;
 
 // Admin Controllers 
 use App\Http\Controllers\Admin\DashboardAdminController;
@@ -60,6 +61,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/owner/kinerjadivisi', [KinerjaDivisiController::class, 'index'])->name('owner.kinerjadivisi');
     Route::get('/owner/monitoringkaryawan', [MonitoringKaryawanController::class, 'index'])->name('owner.monitoringkaryawan');
     Route::get('/owner/datainvestor', [DataInvestorController::class, 'index'])->name('owner.datainvestor');
+    Route::get('/owner/laporanmasuk', [LaporanMasukController::class, 'index'])->name('owner.laporanmasuk');
+    Route::get('/owner/laporanmasuk/{laporan}/download', [LaporanMasukController::class, 'download'])->name('owner.laporanmasuk.download');
 
     // Halaman Admin 
     Route::get('/admin/kirimlaporan', [KirimLaporanController::class, 'index'])->name('admin.kirimlaporan');
