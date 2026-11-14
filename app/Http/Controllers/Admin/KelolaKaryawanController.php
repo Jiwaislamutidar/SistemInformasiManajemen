@@ -15,8 +15,8 @@ class KelolaKaryawanController extends Controller
     {
         return view('admin.kelolakaryawan', [
             'karyawans' => Karyawan::with(['divisi', 'jabatan'])->latest()->get(),
-            'divisis' => Divisi::orderBy('nama_divisi')->get(),
-            'jabatans' => Jabatan::orderBy('nama_jabatan')->get(),
+            'divisis' => Divisi::whereIn('nama_divisi', Divisi::allowedNames())->orderBy('nama_divisi')->get(),
+            'jabatans' => Jabatan::whereIn('nama_jabatan', Jabatan::allowedNames())->orderBy('nama_jabatan')->get(),
         ]);
     }
 
@@ -52,8 +52,8 @@ class KelolaKaryawanController extends Controller
             'nip' => ['nullable', 'string', 'max:50', Rule::unique('karyawan', 'nip')->ignore($karyawan)],
             'nama' => ['required', 'string', 'max:120'],
             'telepon' => ['nullable', 'string', 'max:30'],
-            'divisi_id' => ['required', 'integer', 'exists:divisi,id'],
-            'jabatan_id' => ['required', 'integer', 'exists:jabatan,id'],
+            'divisi_id' => ['required', 'integer', Rule::exists('divisi', 'id')->where(fn ($query) => $query->whereIn('nama_divisi', Divisi::allowedNames()))],
+            'jabatan_id' => ['required', 'integer', Rule::exists('jabatan', 'id')->where(fn ($query) => $query->whereIn('nama_jabatan', Jabatan::allowedNames()))],
             'gaji_pokok' => ['required', 'numeric', 'min:0'],
             'status' => ['required', 'in:aktif,nonaktif'],
         ]);

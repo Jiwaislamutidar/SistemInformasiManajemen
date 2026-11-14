@@ -14,7 +14,7 @@ class UserSeeder extends Seeder
         User::updateorCreate([
             'nama' => 'Bpk. Owner Eksekutif',
             'email' => 'owner@dealer.com',
-            'password' => Hash::make('password123'),
+            'password' => Hash::make('owner123'),
             'role' => 'owner',
             'status' => 'aktif',
         ]);
@@ -23,7 +23,7 @@ class UserSeeder extends Seeder
         User::updateorCreate([
             'nama' => 'Admin Operasional',
             'email' => 'admin@dealer.com',
-            'password' => Hash::make('password123'),
+            'password' => Hash::make('admin123'),
             'role' => 'admin',
             'status' => 'aktif',
         ]);
@@ -32,7 +32,7 @@ class UserSeeder extends Seeder
         User::updateorCreate([
             'nama' => 'Jiwa Admin IT',
             'email' => 'adminit@dealer.com',
-            'password' => Hash::make('password123'),
+            'password' => Hash::make('adminit123'),
             'role' => 'admin_it',
             'status' => 'aktif',
         ]);

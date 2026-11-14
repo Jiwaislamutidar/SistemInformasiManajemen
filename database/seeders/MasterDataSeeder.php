@@ -10,11 +10,11 @@ class MasterDataSeeder extends Seeder
 {
     public function run(): void
     {
-        foreach (['Sales & Marketing', 'After-Sales & Servis', 'Keuangan & Akuntansi', 'Operasional'] as $nama) {
+        foreach (Divisi::allowedNames() as $nama) {
             Divisi::firstOrCreate(['nama_divisi' => $nama], ['kepala_divisi' => '']);
         }
 
-        foreach (['Sales Executive', 'Supervisor', 'Admin Operasional', 'Teknisi', 'Staf Keuangan'] as $nama) {
+        foreach (Jabatan::allowedNames() as $nama) {
             Jabatan::firstOrCreate(['nama_jabatan' => $nama]);
         }
     }

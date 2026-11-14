@@ -9,8 +9,15 @@ class Jabatan extends Model
 {
     use HasFactory;
 
+    public const NAMES = ['Admin', 'IT', 'Mekanik', 'Akuntan', 'Sales'];
+
     protected $table = 'jabatan';
     protected $fillable = ['nama_jabatan'];
+
+    public static function allowedNames(): array
+    {
+        return self::NAMES;
+    }
 
     public function karyawans()
     {
