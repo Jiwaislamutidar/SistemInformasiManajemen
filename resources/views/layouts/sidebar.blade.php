@@ -19,9 +19,6 @@
             <a href="{{ route('owner.dashboard') }}" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition {{ request()->routeIs('owner.dashboard') ? 'bg-[#D4AF37] text-gray-950 font-bold shadow-md' : 'text-gray-300 hover:bg-white/10 hover:text-white' }}">
                 <span>📊</span> <span>Dashboard Owner</span>
             </a>
-            <a href="{{ route('owner.profit') }}" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition {{ request()->routeIs('owner.profit') ? 'bg-[#D4AF37] text-gray-950 font-bold shadow-md' : 'text-gray-300 hover:bg-white/10 hover:text-white' }}">
-                <span>💰</span> <span>Profit Perusahaan</span>
-            </a>
             <a href="{{ route('owner.laporankeuangan')}}" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition {{ request()->routeIs('owner.laporankeuangan') ? 'bg-[#D4AF37] text-gray-950 font-bold shadow-md' : 'text-gray-300 hover:bg-white/10 hover:text-white' }}">
                 <span>📈</span> <span>Laporan Keuangan</span>
             </a>
@@ -36,12 +33,6 @@
             </a>
             <a href="{{ route('owner.monitoringkaryawan')}}" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition {{ request()->routeIs('owner.monitoringkaryawan') ? 'bg-[#D4AF37] text-gray-950 font-bold shadow-md' : 'text-gray-300 hover:bg-white/10 hover:text-white' }}">
                 <span>👥</span> <span>Monitoring Karyawan</span>
-            </a>
-            <a href="#" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-gray-300 hover:bg-white/10 hover:text-white transition">
-                <span>✔️</span> <span>Persetujuan Gaji</span>
-            </a>
-            <a href="{{ route('owner.datainvestor')}}" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition {{ request()->routeIs('owner.datainvestor') ? 'bg-[#D4AF37] text-gray-950 font-bold shadow-md' : 'text-gray-300 hover:bg-white/10 hover:text-white' }}">
-                <span>🤝</span> <span>Data Investor</span>
             </a>
         @endif
 
@@ -68,12 +59,6 @@
             </a>
             <a href="{{ route('admin.jadwalshift') }}" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition {{ request()->routeIs('admin.jadwalshift') ? 'bg-[#D4AF37] text-gray-950 font-bold shadow-md' : 'text-gray-300 hover:bg-white/10 hover:text-white' }}">
                 <span>📋</span> <span>Jadwal Shift Karyawan</span>
-            </a>
-            <a href="{{ route('admin.kelolainvestor') }}" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition {{ request()->routeIs('admin.kelolainvestor') ? 'bg-[#D4AF37] text-gray-950 font-bold shadow-md' : 'text-gray-300 hover:bg-white/10 hover:text-white' }}">
-                <span>🤝</span> <span>Kelola Data Investor</span>
-            </a>
-            <a href="{{ route('admin.buatlaporan') }}" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition {{ request()->routeIs('admin.buatlaporan') ? 'bg-[#D4AF37] text-gray-950 font-bold shadow-md' : 'text-gray-300 hover:bg-white/10 hover:text-white' }}">
-                <span>📊</span> <span>Buat Laporan & Ekspor</span>
             </a>
         @endif
 

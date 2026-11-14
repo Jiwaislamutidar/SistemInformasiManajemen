@@ -4,12 +4,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 
 // Owner Controllers
-use App\Http\Controllers\Owner\ProfitController; 
 use App\Http\Controllers\Owner\LaporanKeuanganController;
 use App\Http\Controllers\Owner\LaporanPenjualanController;
 use App\Http\Controllers\Owner\KinerjaDivisiController;
 use App\Http\Controllers\Owner\MonitoringKaryawanController;
-use App\Http\Controllers\Owner\DataInvestorController;
 use App\Http\Controllers\Owner\LaporanMasukController;
 use App\Http\Controllers\Owner\DashboardOwnerController;
 
@@ -21,8 +19,6 @@ use App\Http\Controllers\Admin\InputKeuanganController;
 use App\Http\Controllers\Admin\KelolaMobilController;
 use App\Http\Controllers\Admin\KelolaKaryawanController;
 use App\Http\Controllers\Admin\JadwalShiftController;
-use App\Http\Controllers\Admin\KelolaDataInvestorController;
-use App\Http\Controllers\Admin\BuatLaporanController;
 
 // Admin IT Controllers 
 use App\Http\Controllers\AdminIt\BackupDataController;
@@ -49,7 +45,6 @@ Route::middleware(['auth'])->group(function () {
     })->name('adminit.dashboard');
 
     // Halaman Owner
-    Route::get('/owner/profit', [ProfitController::class, 'index'])->name('owner.profit');
     Route::get('/owner/laporankeuangan', [LaporanKeuanganController::class, 'index'])->name('owner.laporankeuangan');
     Route::delete('/owner/laporankeuangan/all', [LaporanKeuanganController::class, 'destroyAll'])->name('owner.laporankeuangan.destroyAll');
     Route::delete('/owner/laporankeuangan/{type}/{id}', [LaporanKeuanganController::class, 'destroy'])
@@ -57,7 +52,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/owner/laporanpenjualan', [LaporanPenjualanController::class, 'index'])->name('owner.laporanpenjualan');
     Route::get('/owner/kinerjadivisi', [KinerjaDivisiController::class, 'index'])->name('owner.kinerjadivisi');
     Route::get('/owner/monitoringkaryawan', [MonitoringKaryawanController::class, 'index'])->name('owner.monitoringkaryawan');
-    Route::get('/owner/datainvestor', [DataInvestorController::class, 'index'])->name('owner.datainvestor');
     Route::get('/owner/laporanmasuk', [LaporanMasukController::class, 'index'])->name('owner.laporanmasuk');
     Route::get('/owner/laporanmasuk/{laporan}/download', [LaporanMasukController::class, 'download'])->name('owner.laporanmasuk.download');
 
@@ -80,8 +74,6 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/admin/kelolakaryawan/{karyawan}', [KelolaKaryawanController::class, 'destroy'])->name('admin.kelolakaryawan.destroy');
     Route::get('/admin/jadwalshift', [JadwalShiftController::class, 'index'])->name('admin.jadwalshift');
     Route::put('/admin/jadwalshift/{karyawan}', [JadwalShiftController::class, 'update'])->name('admin.jadwalshift.update');
-    Route::get('/admin/kelolainvestor', [KelolaDataInvestorController::class, 'index'])->name('admin.kelolainvestor');
-    Route::get('/admin/buatlaporan', [BuatLaporanController::class, 'index'])->name('admin.buatlaporan');
     Route::delete('/owner/laporanpenjualan/all', [LaporanPenjualanController::class, 'destroyAll'])->name('owner.laporanpenjualan.destroyAll');
     Route::delete('/owner/laporanpenjualan/{id}', [LaporanPenjualanController::class, 'destroy'])->name('owner.laporanpenjualan.destroy');
 
