@@ -8,25 +8,30 @@ use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
+    /**
+     * Seed the application's database.
+     */
     public function run(): void
     {
-        $this->call([MasterDataSeeder::class, MobilSeeder::class]);
+        // 1. Akun Owner (Pemilik Dealer)
+        User::updateOrCreate(
+            ['email' => 'owner@dealer.com'],
+            [
+                'nama' => 'Bpk. Owner Eksekutif',
+                'password' => Hash::make('owner123'),
+                'role' => 'owner',
+                'status' => 'aktif',
+            ]
+        );
 
-        // 1. Akun Admin
+        // 2. Akun Admin (Pengelola Operasional)
         User::updateOrCreate(
             ['email' => 'admin@dealer.com'],
             [
                 'nama' => 'Admin Operasional',
-                'password' => Hash::make('password123'),
-            ]
-        );
-
-        // 2. Akun Owner
-        User::updateOrCreate(
-            ['email' => 'owner@dealer.com'],
-            [
-                'nama' => 'Owner Showroom',
-                'password' => Hash::make('password123'),
+                'password' => Hash::make('admin123'),
+                'role' => 'admin',
+                'status' => 'aktif',
             ]
         );
 
@@ -34,8 +39,10 @@ class DatabaseSeeder extends Seeder
         User::updateOrCreate(
             ['email' => 'adminit@dealer.com'],
             [
-                'nama' => 'Admin IT',
-                'password' => Hash::make('password123'),
+                'nama' => 'Jiwa Admin IT',
+                'password' => Hash::make('adminit123'),
+                'role' => 'admin_it',
+                'status' => 'aktif',
             ]
         );
     }

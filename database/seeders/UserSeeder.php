@@ -11,30 +11,36 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         // 1. Akun Owner (Pemilik Dealer)
-        User::updateorCreate([
-            'nama' => 'Bpk. Owner Eksekutif',
-            'email' => 'owner@dealer.com',
-            'password' => Hash::make('owner123'),
-            'role' => 'owner',
-            'status' => 'aktif',
-        ]);
+        User::updateOrCreate(
+            ['email' => 'owner@dealer.com'], // Kunci pencarian unik
+            [
+                'nama' => 'Bpk. Owner Eksekutif',
+                'password' => Hash::make('owner123'),
+                'role' => 'owner',
+                'status' => 'aktif',
+            ]
+        );
 
         // 2. Akun Admin (Pengelola Operasional & Divisi)
-        User::updateorCreate([
-            'nama' => 'Admin Operasional',
-            'email' => 'admin@dealer.com',
-            'password' => Hash::make('admin123'),
-            'role' => 'admin',
-            'status' => 'aktif',
-        ]);
+        User::updateOrCreate(
+            ['email' => 'admin@dealer.com'], // Kunci pencarian unik
+            [
+                'nama' => 'Admin Operasional',
+                'password' => Hash::make('admin123'),
+                'role' => 'admin',
+                'status' => 'aktif',
+            ]
+        );
 
         // 3. Akun Admin IT (Teknis & Pengelola Sistem)
-        User::updateorCreate([
-            'nama' => 'Jiwa Admin IT',
-            'email' => 'adminit@dealer.com',
-            'password' => Hash::make('adminit123'),
-            'role' => 'admin_it',
-            'status' => 'aktif',
-        ]);
+        User::updateOrCreate(
+            ['email' => 'adminit@dealer.com'], // Kunci pencarian unik
+            [
+                'nama' => 'Jiwa Admin IT',
+                'password' => Hash::make('adminit123'),
+                'role' => 'admin_it',
+                'status' => 'aktif',
+            ]
+        );
     }
 }

