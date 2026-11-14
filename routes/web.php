@@ -43,9 +43,7 @@ Route::middleware(['auth'])->group(function () {
         return view('owner.dashboard');
     })->name('owner.dashboard');
 
-    Route::get('/admin/dashboard', function () {
-        return view('admin.dashboard');
-    })->name('admin.dashboard');
+    Route::get('/admin/dashboard', [DashboardAdminController::class, 'index'])->name('admin.dashboard');
 
     Route::get('/adminit/dashboard', function () {
         return view('adminit.dashboard');
