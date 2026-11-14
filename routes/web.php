@@ -6,7 +6,6 @@ use App\Http\Controllers\ProfileController;
 // Owner Controllers
 use App\Http\Controllers\Owner\LaporanKeuanganController;
 use App\Http\Controllers\Owner\LaporanPenjualanController;
-use App\Http\Controllers\Owner\KinerjaDivisiController;
 use App\Http\Controllers\Owner\MonitoringKaryawanController;
 use App\Http\Controllers\Owner\LaporanMasukController;
 use App\Http\Controllers\Owner\DashboardOwnerController;
@@ -50,7 +49,6 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/owner/laporankeuangan/{type}/{id}', [LaporanKeuanganController::class, 'destroy'])
         ->whereIn('type', ['sale', 'expense'])->whereNumber('id')->name('owner.laporankeuangan.destroy');
     Route::get('/owner/laporanpenjualan', [LaporanPenjualanController::class, 'index'])->name('owner.laporanpenjualan');
-    Route::get('/owner/kinerjadivisi', [KinerjaDivisiController::class, 'index'])->name('owner.kinerjadivisi');
     Route::get('/owner/monitoringkaryawan', [MonitoringKaryawanController::class, 'index'])->name('owner.monitoringkaryawan');
     Route::get('/owner/laporanmasuk', [LaporanMasukController::class, 'index'])->name('owner.laporanmasuk');
     Route::get('/owner/laporanmasuk/{laporan}/download', [LaporanMasukController::class, 'download'])->name('owner.laporanmasuk.download');
