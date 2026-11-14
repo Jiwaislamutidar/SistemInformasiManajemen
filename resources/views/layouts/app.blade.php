@@ -23,8 +23,8 @@
                         </a>
                     </div>
                     <div class="flex items-center gap-3">
-                        <div class="hidden text-right sm:block"><div class="text-xs font-bold">{{ Auth::user()->name }}</div><div class="text-[10px] capitalize text-amber-300">{{ str_replace('_', ' ', Auth::user()->role) }}</div></div>
-                        <a href="{{ route('profile.edit') }}" class="flex h-9 w-9 items-center justify-center rounded-full bg-[#2F5D50] text-sm font-bold text-white transition hover:bg-[#D4AF37] hover:text-gray-950" title="Profile">{{ strtoupper(substr(Auth::user()->name, 0, 1)) }}</a>
+                        <div class="hidden text-right sm:block"><div class="text-xs font-bold">{{ Auth::user()->nama }}</div><div class="text-[10px] capitalize text-amber-300">{{ str_replace('_', ' ', Auth::user()->role) }}</div></div>
+                        <a href="{{ route('profile.edit') }}" class="flex h-9 w-9 items-center justify-center rounded-full bg-[#2F5D50] text-sm font-bold text-white transition hover:bg-[#D4AF37] hover:text-gray-950" title="Profile">{{ strtoupper(substr(Auth::user()->nama, 0, 1)) }}</a>
                     </div>
                 </div>
             </header>

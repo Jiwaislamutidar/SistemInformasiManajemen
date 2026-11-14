@@ -1,53 +1,13 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-bold text-xl text-gray-800 leading-tight">Data Master (Divisi & Jabatan)</h2>
-    </x-slot>
-
-    <div class="py-6 bg-gray-100 min-h-screen">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-2 gap-6">
-            <!-- Tabel Divisi -->
-            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-200">
-                <div class="flex justify-between items-center mb-4">
-                    <h3 class="text-sm font-bold text-gray-800 uppercase tracking-wider">Daftar Divisi</h3>
-                    <button class="px-3 py-1.5 bg-[#10261C] text-white text-xs font-semibold rounded-lg">+ Divisi</button>
-                </div>
-                <ul class="space-y-2 text-xs text-gray-700">
-                    <li class="p-3 bg-gray-50 rounded-xl flex justify-between items-center">
-                        <span class="font-semibold">Divisi Penjualan & Marketing</span>
-                        <span class="text-gray-400">4 Karyawan</span>
-                    </li>
-                    <li class="p-3 bg-gray-50 rounded-xl flex justify-between items-center">
-                        <span class="font-semibold">Divisi Keuangan & Akuntansi</span>
-                        <span class="text-gray-400">3 Karyawan</span>
-                    </li>
-                    <li class="p-3 bg-gray-50 rounded-xl flex justify-between items-center">
-                        <span class="font-semibold">Divisi Operasional & Bengkel</span>
-                        <span class="text-gray-400">8 Karyawan</span>
-                    </li>
-                </ul>
-            </div>
-
-            <!-- Tabel Jabatan -->
-            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-200">
-                <div class="flex justify-between items-center mb-4">
-                    <h3 class="text-sm font-bold text-gray-800 uppercase tracking-wider">Daftar Jabatan</h3>
-                    <button class="px-3 py-1.5 bg-[#D4AF37] text-gray-950 text-xs font-semibold rounded-lg">+ Jabatan</button>
-                </div>
-                <ul class="space-y-2 text-xs text-gray-700">
-                    <li class="p-3 bg-gray-50 rounded-xl flex justify-between items-center">
-                        <span class="font-semibold">Branch Manager / Owner</span>
-                        <span class="px-2 py-0.5 bg-amber-100 text-amber-800 rounded">Eksekutif</span>
-                    </li>
-                    <li class="p-3 bg-gray-50 rounded-xl flex justify-between items-center">
-                        <span class="font-semibold">Admin Operasional</span>
-                        <span class="px-2 py-0.5 bg-emerald-100 text-emerald-800 rounded">Staff</span>
-                    </li>
-                    <li class="p-3 bg-gray-50 rounded-xl flex justify-between items-center">
-                        <span class="font-semibold">Sales Executive</span>
-                        <span class="px-2 py-0.5 bg-emerald-100 text-emerald-800 rounded">Staff</span>
-                    </li>
-                </ul>
-            </div>
+    <x-slot name="header"><h2 class="text-xl font-bold text-[#10261C]">Data Master Divisi</h2></x-slot>
+    <div class="min-h-full bg-[#f4f6f3] px-4 py-6 sm:px-6 lg:px-8"><div class="mx-auto max-w-7xl space-y-4">
+        @include('adminit.partials.feedback')
+        <div class="grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1fr)_20rem]">
+            <div class="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm"><div class="border-b border-gray-100 px-5 py-4"><h3 class="text-sm font-bold uppercase tracking-wider text-[#10261C]">Daftar Divisi</h3></div><div class="overflow-x-auto"><table class="w-full min-w-[600px] text-left text-sm"><thead class="bg-[#10261C] text-xs uppercase tracking-wider text-white"><tr><th class="px-5 py-3">Nama Divisi</th><th class="px-5 py-3">Kepala Divisi</th><th class="px-5 py-3">Karyawan</th><th class="px-5 py-3">Aksi</th></tr></thead><tbody class="divide-y divide-gray-100">
+                @forelse ($divisis as $divisi)<tr><form method="POST" action="{{ route('adminit.divisi.update', $divisi) }}"><td class="px-5 py-3"><input name="nama_divisi" value="{{ $divisi->nama_divisi }}" class="w-full rounded-lg border-gray-300 text-sm focus:border-[#D4AF37] focus:ring-[#D4AF37]" required></td><td class="px-5 py-3"><input name="kepala_divisi" value="{{ $divisi->kepala_divisi }}" class="w-full rounded-lg border-gray-300 text-sm focus:border-[#D4AF37] focus:ring-[#D4AF37]"></td><td class="px-5 py-3 text-gray-600">{{ $divisi->karyawans_count }}</td><td class="space-x-2 whitespace-nowrap px-5 py-3">@csrf @method('PUT')<button class="text-xs font-bold text-[#10261C] hover:text-[#D4AF37]">Simpan</button></form><form class="inline" method="POST" action="{{ route('adminit.divisi.destroy', $divisi) }}">@csrf @method('DELETE')<button class="text-xs font-bold text-red-600 hover:text-red-800" onclick="return confirm('Hapus divisi ini?')">Hapus</button></form></td></tr>
+                @empty<tr><td colspan="4" class="px-5 py-8 text-center text-gray-500">Belum ada divisi.</td></tr>@endforelse
+            </tbody></table></div></div>
+            <div class="h-fit rounded-2xl border border-gray-200 bg-white p-5 shadow-sm"><h3 class="text-sm font-bold uppercase tracking-wider text-[#10261C]">Tambah Divisi</h3><form class="mt-4 space-y-4" method="POST" action="{{ route('adminit.divisi.store') }}">@csrf<div><label class="mb-1 block text-xs font-semibold text-gray-600">Nama divisi</label><input name="nama_divisi" class="w-full rounded-lg border-gray-300 text-sm focus:border-[#D4AF37] focus:ring-[#D4AF37]" required></div><div><label class="mb-1 block text-xs font-semibold text-gray-600">Kepala divisi</label><input name="kepala_divisi" class="w-full rounded-lg border-gray-300 text-sm focus:border-[#D4AF37] focus:ring-[#D4AF37]"></div><button class="w-full rounded-lg bg-[#10261C] px-4 py-2.5 text-xs font-bold text-white hover:bg-[#183A2A]">Tambah Divisi</button></form></div>
         </div>
-    </div>
+    </div></div>
 </x-app-layout>

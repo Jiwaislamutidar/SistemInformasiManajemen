@@ -1,53 +1,11 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-bold text-xl text-gray-800 leading-tight">Kelola Akun & Hak Akses User</h2>
-    </x-slot>
-
-    <div class="py-6 bg-gray-100 min-h-screen">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
-            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-200">
-                <div class="flex justify-between items-center mb-4">
-                    <h3 class="text-sm font-bold text-gray-800 uppercase tracking-wider">Daftar Pengguna Sistem</h3>
-                    <button class="px-4 py-2 bg-[#10261C] hover:bg-[#183A2A] text-white text-xs font-semibold rounded-xl transition">
-                        + Tambah Akun Baru
-                    </button>
-                </div>
-                <div class="overflow-x-auto">
-                    <table class="w-full text-left text-xs">
-                        <thead class="bg-gray-50 text-gray-700 uppercase font-bold border-b border-gray-200">
-                            <tr>
-                                <th class="p-3">Nama</th>
-                                <th class="p-3">Email</th>
-                                <th class="p-3">Role / Hak Akses</th>
-                                <th class="p-3">Status</th>
-                                <th class="p-3 text-center">Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody class="divide-y divide-gray-100 text-gray-600">
-                            <tr>
-                                <td class="p-3 font-semibold text-gray-900">H. Muhammad Jiwa I.</td>
-                                <td class="p-3">jiwa@dealer.test</td>
-                                <td class="p-3"><span class="px-2 py-0.5 bg-amber-100 text-amber-800 rounded font-bold">Owner</span></td>
-                                <td class="p-3"><span class="text-emerald-600 font-semibold">Aktif</span></td>
-                                <td class="p-3 text-center space-x-2">
-                                    <button class="text-blue-600 hover:underline">Edit</button>
-                                    <button class="text-red-600 hover:underline">Reset Pass</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="p-3 font-semibold text-gray-900">Admin Operasional 1</td>
-                                <td class="p-3">admin@dealer.test</td>
-                                <td class="p-3"><span class="px-2 py-0.5 bg-emerald-100 text-emerald-800 rounded font-bold">Admin</span></td>
-                                <td class="p-3"><span class="text-emerald-600 font-semibold">Aktif</span></td>
-                                <td class="p-3 text-center space-x-2">
-                                    <button class="text-blue-600 hover:underline">Edit</button>
-                                    <button class="text-red-600 hover:underline">Reset Pass</button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
+    <x-slot name="header"><h2 class="text-xl font-bold text-[#10261C]">Kelola Akun &amp; Hak Akses</h2></x-slot>
+    <div class="min-h-full bg-[#f4f6f3] px-4 py-6 sm:px-6 lg:px-8"><div class="mx-auto max-w-7xl space-y-4">
+        @include('adminit.partials.feedback')
+        <div class="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm"><div class="border-b border-gray-100 px-5 py-4"><h3 class="text-sm font-bold uppercase tracking-wider text-[#10261C]">Daftar Pengguna Sistem</h3></div><div class="overflow-x-auto"><table class="w-full min-w-[680px] text-left text-sm">
+            <thead class="bg-[#10261C] text-xs uppercase tracking-wider text-white"><tr><th class="px-5 py-3">Nama</th><th class="px-5 py-3">Email</th><th class="px-5 py-3">Role</th><th class="px-5 py-3">Status</th><th class="px-5 py-3">Aksi</th></tr></thead><tbody class="divide-y divide-gray-100">
+            @forelse ($users as $user)<tr class="align-top"><td class="px-5 py-4 font-semibold text-gray-900">{{ $user->nama }}</td><td class="px-5 py-4 text-gray-600">{{ $user->email }}</td><form method="POST" action="{{ route('adminit.kelolaakun.update', $user) }}"><td class="px-5 py-4"><select name="role" class="w-36 rounded-lg border-gray-300 text-sm focus:border-[#D4AF37] focus:ring-[#D4AF37]">@foreach (['owner', 'admin', 'admin_it'] as $role)<option value="{{ $role }}" @selected($user->role === $role)>{{ str_replace('_', ' ', ucfirst($role)) }}</option>@endforeach</select></td><td class="px-5 py-4"><select name="status" class="w-32 rounded-lg border-gray-300 text-sm focus:border-[#D4AF37] focus:ring-[#D4AF37]"><option value="aktif" @selected($user->status === 'aktif')>Aktif</option><option value="nonaktif" @selected($user->status === 'nonaktif')>Nonaktif</option></select></td><td class="px-5 py-4">@csrf @method('PUT')<button class="rounded-lg bg-[#D4AF37] px-3 py-2 text-xs font-bold text-gray-950 hover:bg-amber-400">Simpan</button></td></form></tr>
+            @empty<tr><td colspan="5" class="px-5 py-8 text-center text-gray-500">Belum ada pengguna.</td></tr>@endforelse
+            </tbody></table></div></div>
+    </div></div>
 </x-app-layout>

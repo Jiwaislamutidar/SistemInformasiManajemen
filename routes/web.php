@@ -19,12 +19,8 @@ use App\Http\Controllers\Admin\KelolaMobilController;
 use App\Http\Controllers\Admin\KelolaKaryawanController;
 use App\Http\Controllers\Admin\JadwalShiftController;
 
-// Admin IT Controllers 
-use App\Http\Controllers\AdminIt\BackupDataController;
-use App\Http\Controllers\AdminIt\KelolaAkunController;
-use App\Http\Controllers\AdminIt\KelolaDataMasterController;
-use App\Http\Controllers\AdminIt\LihatLogAktivitasController;
-use App\Http\Controllers\AdminIt\PengaturanSistemController;
+// Admin IT Controllers
+use App\Http\Controllers\AdminIt\AdminItController;
 
 // Halaman depan
 Route::get('/', function () {
@@ -39,9 +35,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/admin/dashboard', [DashboardAdminController::class, 'index'])->name('admin.dashboard');
 
-    Route::get('/adminit/dashboard', function () {
-        return view('adminit.dashboard');
-    })->name('adminit.dashboard');
+    Route::get('/adminit/dashboard', [AdminItController::class, 'dashboard'])->name('adminit.dashboard');
 
     // Halaman Owner
     Route::get('/owner/laporankeuangan', [LaporanKeuanganController::class, 'index'])->name('owner.laporankeuangan');
@@ -76,11 +70,15 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/owner/laporanpenjualan/{id}', [LaporanPenjualanController::class, 'destroy'])->name('owner.laporanpenjualan.destroy');
 
     // Halaman Admin IT 
-    Route::get('/adminit/backupdata', [BackupDataController::class, 'index'])->name('adminit.backupdata');
-    Route::get('/adminit/kelolaakun', [KelolaAkunController::class, 'index'])->name('adminit.kelolaakun');
-    Route::get('/adminit/keloladatamaster', [KelolaDataMasterController::class, 'index'])->name('adminit.keloladatamaster');
-    Route::get('/adminit/lihatlogaktivitas', [LihatLogAktivitasController::class, 'index'])->name('adminit.lihatlogaktivitas');
-    Route::get('/adminit/pengaturansistem', [PengaturanSistemController::class, 'index'])->name('adminit.pengaturansistem');
+    Route::get('/adminit/backupdata', [AdminItController::class, 'maintenance'])->name('adminit.backupdata');
+    Route::post('/adminit/maintenance/clear-cache', [AdminItController::class, 'clearCache'])->name('adminit.maintenance.clear-cache');
+    Route::get('/adminit/kelolaakun', [AdminItController::class, 'akun'])->name('adminit.kelolaakun');
+    Route::put('/adminit/kelolaakun/{user}', [AdminItController::class, 'updateAkun'])->name('adminit.kelolaakun.update');
+    Route::get('/adminit/keloladatamaster', [AdminItController::class, 'master'])->name('adminit.keloladatamaster');
+    Route::post('/adminit/keloladatamaster', [AdminItController::class, 'storeDivisi'])->name('adminit.divisi.store');
+    Route::put('/adminit/keloladatamaster/{divisi}', [AdminItController::class, 'updateDivisi'])->name('adminit.divisi.update');
+    Route::delete('/adminit/keloladatamaster/{divisi}', [AdminItController::class, 'destroyDivisi'])->name('adminit.divisi.destroy');
+    Route::get('/adminit/lihatlogaktivitas', [AdminItController::class, 'log'])->name('adminit.lihatlogaktivitas');
 
     // Fitur Profile bawaan Breeze 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
