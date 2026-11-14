@@ -71,7 +71,7 @@ Route::middleware(['auth'])->group(function () {
 
     // Halaman Admin IT 
     Route::get('/adminit/backupdata', [AdminItController::class, 'maintenance'])->name('adminit.backupdata');
-    Route::post('/adminit/maintenance/clear-cache', [AdminItController::class, 'clearCache'])->name('adminit.maintenance.clear-cache');
+    Route::post('/adminit/maintenance/clear-cache', [AdminItController::class, 'clearCache'])->middleware('role:admin_it')->name('adminit.maintenance.clear-cache');
     Route::get('/adminit/kelolaakun', [AdminItController::class, 'akun'])->name('adminit.kelolaakun');
     Route::put('/adminit/kelolaakun/{user}', [AdminItController::class, 'updateAkun'])->middleware('role:admin_it')->name('adminit.kelolaakun.update');
     Route::put('/adminit/kelolaakun/{user}/password', [AdminItController::class, 'updatePassword'])->middleware('role:admin_it')->name('adminit.akun.password');
@@ -84,6 +84,11 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/adminit/keloladatamaster/karyawan/{karyawan}', [AdminItController::class, 'updateKaryawan'])->middleware('role:admin_it')->name('adminit.karyawan.update');
     Route::delete('/adminit/keloladatamaster/karyawan/{karyawan}', [AdminItController::class, 'destroyKaryawan'])->middleware('role:admin_it')->name('adminit.karyawan.destroy');
     Route::get('/adminit/lihatlogaktivitas', [AdminItController::class, 'log'])->name('adminit.lihatlogaktivitas');
+    Route::post('/adminit/lihatlogaktivitas/restore/{type}/{id}', [AdminItController::class, 'restore'])
+        ->whereIn('type', ['mobil', 'karyawan', 'penjualan'])
+        ->whereNumber('id')
+        ->middleware('role:admin_it')
+        ->name('adminit.lihatlogaktivitas.restore');
 
     // Fitur Profile bawaan Breeze 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

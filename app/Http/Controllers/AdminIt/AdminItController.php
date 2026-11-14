@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Divisi;
 use App\Models\Jabatan;
 use App\Models\Karyawan;
+use App\Models\Mobil;
+use App\Models\Penjualan;
 use App\Models\User;
 use App\Http\Requests\KaryawanRequest;
 use App\Services\KaryawanService;
@@ -173,7 +175,7 @@ class AdminItController extends Controller
 
     public function maintenance()
     {
-        return view('adminit.backupdata');
+        return redirect()->route('adminit.lihatlogaktivitas');
     }
 
     public function clearCache()
@@ -188,10 +190,31 @@ class AdminItController extends Controller
         $logs = DB::table('log_aktivitas')
             ->leftJoin('users', 'users.id', '=', 'log_aktivitas.user_id')
             ->select('log_aktivitas.id', 'log_aktivitas.aksi', 'log_aktivitas.waktu', 'users.nama', 'users.role')
+            ->whereIn('users.role', ['admin_it', 'admin', 'owner'])
             ->latest('log_aktivitas.waktu')
+            ->latest('log_aktivitas.id')
             ->limit(100)
             ->get();
 
-        return view('adminit.lihatlogaktivitas', compact('logs'));
+        $deletedRecords = collect()
+            ->concat(Mobil::onlyTrashed()->latest('deleted_at')->get()->map(fn (Mobil $record) => ['type' => 'mobil', 'id' => $record->getKey(), 'label' => $record->merk_tipe, 'detail' => 'Stok mobil', 'deleted_at' => $record->deleted_at]))
+            ->concat(Karyawan::onlyTrashed()->latest('deleted_at')->get()->map(fn (Karyawan $record) => ['type' => 'karyawan', 'id' => $record->getKey(), 'label' => $record->nama, 'detail' => 'Karyawan', 'deleted_at' => $record->deleted_at]))
+            ->concat(Penjualan::onlyTrashed()->latest('deleted_at')->get()->map(fn (Penjualan $record) => ['type' => 'penjualan', 'id' => $record->getKey(), 'label' => $record->nama_pembeli, 'detail' => 'Penjualan '.$record->unit_mobil, 'deleted_at' => $record->deleted_at]))
+            ->sortByDesc('deleted_at')
+            ->values();
+
+        return view('adminit.lihatlogaktivitas', compact('logs', 'deletedRecords'));
+    }
+
+    public function restore(string $type, int $id)
+    {
+        $models = ['mobil' => Mobil::class, 'karyawan' => Karyawan::class, 'penjualan' => Penjualan::class];
+        abort_unless(isset($models[$type]), 404);
+        $record = $models[$type]::onlyTrashed()->findOrFail($id);
+        $record->restore();
+        $labels = ['mobil' => 'stok mobil', 'karyawan' => 'karyawan', 'penjualan' => 'penjualan'];
+        \App\Services\ActivityLogger::log("Memulihkan data {$labels[$type]} #{$id} dari riwayat penghapusan");
+
+        return back()->with('success', 'Data berhasil dipulihkan dan dikembalikan ke modul asal.');
     }
 }
