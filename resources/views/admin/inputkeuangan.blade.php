@@ -12,7 +12,7 @@
                 <div class="mb-6 rounded-xl border-l-4 border-red-700 bg-white p-4 text-sm text-red-700"><ul class="list-disc pl-5">@foreach($errors->all() as $error)<li>{{ $error }}</li>@endforeach</ul></div>
             @endif
 
-            <div class="overflow-hidden rounded-2xl border border-[#d9dfda] bg-white shadow-sm" x-data="{ type: '{{ old('type', 'expense') }}', category: '{{ old('kategori') }}' }">
+            <div class="overflow-hidden rounded-2xl border border-[#d9dfda] bg-white shadow-sm" x-data="{ type: '{{ old('jenis', 'Pengeluaran') === 'Pendapatan' ? 'income' : 'expense' }}' }">
                 <div class="bg-[#10261C] px-5 py-6 text-white sm:px-8">
                     <p class="text-xs font-semibold uppercase tracking-[.18em] text-[#D4AF37]">Dealer Mobil</p>
                     <h1 class="mt-1 text-xl font-semibold sm:text-2xl">Catat Arus Keuangan</h1>
@@ -27,16 +27,10 @@
                 </div>
 
                 <form action="{{ route('admin.keuangan.store') }}" method="POST" class="grid grid-cols-1 gap-5 p-5 sm:p-8 md:grid-cols-2">@csrf
-                    <input type="hidden" name="type" :value="type">
+                    <input type="hidden" name="jenis" :value="type === 'income' ? 'Pendapatan' : 'Pengeluaran'">
                     <div>
-                        <label for="kategori" class="mb-2 block text-sm font-semibold text-[#10261C]" x-text="type === 'expense' ? 'Kategori Pengeluaran' : 'Kategori / Sumber Pendapatan'"></label>
-                        <select x-show="type === 'expense'" x-cloak id="kategori-expense" x-model="category" class="w-full rounded-lg border border-[#b9c5bd] bg-white px-4 py-3 text-sm focus:border-[#D4AF37] focus:ring-[#D4AF37]/30">
-                            <option value="">Pilih kategori pengeluaran</option><option>Biaya Servis / Perbaikan Unit</option><option>Biaya Detailing & Salon Mobil</option><option>Operasional Kantor & Listrik</option><option>BBM & Transportasi</option>
-                        </select>
-                        <select x-show="type === 'income'" x-cloak id="kategori-income" x-model="category" class="w-full rounded-lg border border-[#b9c5bd] bg-white px-4 py-3 text-sm focus:border-[#D4AF37] focus:ring-[#D4AF37]/30">
-                            <option value="">Pilih sumber pendapatan</option><option>Penjualan Unit Mobil</option><option>Komisi / Fee</option><option>Pendapatan Servis</option><option>Pendapatan Lainnya</option>
-                        </select>
-                        <input type="hidden" name="kategori" x-model="category">
+                        <label for="kategori" class="mb-2 block text-sm font-semibold text-[#10261C]">Kategori</label>
+                        <input id="kategori" name="kategori" value="{{ old('kategori') }}" type="text" required maxlength="255" class="w-full rounded-lg border border-[#b9c5bd] bg-white px-4 py-3 text-sm focus:border-[#D4AF37] focus:ring-[#D4AF37]/30" placeholder="Contoh: Gaji karyawan, Listrik dan air, Iklan">
                     </div>
                     <div>
                         <label for="nominal" class="mb-2 block text-sm font-semibold text-[#10261C]">Nominal (Rp)</label>

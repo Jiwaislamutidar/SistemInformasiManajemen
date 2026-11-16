@@ -16,7 +16,7 @@ class InputKeuanganController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'type' => ['required', 'in:expense,income'],
+            'jenis' => ['required', 'in:Pengeluaran,Pendapatan'],
             'kategori' => ['required', 'string', 'max:255'],
             'nominal' => ['required', 'numeric', 'min:1'],
             'keterangan' => ['nullable', 'string', 'max:2000'],
@@ -24,6 +24,7 @@ class InputKeuanganController extends Controller
 
         Pengeluaran::create([
             ...$data,
+            'type' => $data['jenis'] === 'Pendapatan' ? 'income' : 'expense',
             'tanggal' => now()->toDateString(),
         ]);
 

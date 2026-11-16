@@ -38,7 +38,7 @@ class LaporanKeuanganController extends Controller
             'date' => $sale->created_at,
             'description' => 'Penjualan Unit '.$sale->unit_mobil.' - '.$sale->nama_pembeli,
             'category' => 'Penjualan Unit Mobil',
-            'type' => 'income',
+            'jenis' => 'Pendapatan',
             'amount' => (float) $sale->harga_jual,
             'delete_type' => 'sale',
             'delete_id' => $sale->id,
@@ -48,14 +48,14 @@ class LaporanKeuanganController extends Controller
             'date' => $entry->tanggal ?? $entry->created_at,
             'description' => $entry->keterangan ?: $entry->kategori,
             'category' => $entry->kategori,
-            'type' => $entry->type,
+            'jenis' => $entry->jenis ?: ($entry->type === 'income' ? 'Pendapatan' : 'Pengeluaran'),
             'amount' => (float) $entry->nominal,
             'delete_type' => 'expense',
             'delete_id' => $entry->id,
         ]);
         $entries = $salesEntries->concat($manualEntries)->sortByDesc('date')->values();
-        $totalIncome = $entries->where('type', 'income')->sum('amount');
-        $totalExpense = $entries->where('type', 'expense')->sum('amount');
+        $totalIncome = $entries->where('jenis', 'Pendapatan')->sum('amount');
+        $totalExpense = $entries->where('jenis', 'Pengeluaran')->sum('amount');
 
         return view('owner.laporankeuangan', compact('entries', 'totalIncome', 'totalExpense', 'fromDate', 'toDate'))
             ->with('mobils', Mobil::orderBy('merk_tipe')->get());

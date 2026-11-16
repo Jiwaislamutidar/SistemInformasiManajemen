@@ -14,6 +14,7 @@ return new class extends Migration
     Schema::create('pengeluaran', function (Blueprint $table) {
         $table->id();
         $table->string('type')->default('expense');
+        $table->string('jenis')->default('Pengeluaran');
         $table->string('kategori');
         $table->decimal('nominal', 15, 2);
         $table->date('tanggal');

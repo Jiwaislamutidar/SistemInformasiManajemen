@@ -41,8 +41,8 @@ class DashboardOwnerController extends Controller
     private function netProfit(Collection $sales, Collection $financialEntries): float
     {
         $vehicleProfit = $sales->sum(fn (Penjualan $sale) => (float) $sale->harga_jual - (float) ($sale->mobil?->harga_beli ?? 0));
-        $otherIncome = $financialEntries->where('type', 'income')->sum('nominal');
-        $expenses = $financialEntries->where('type', 'expense')->sum('nominal');
+        $otherIncome = $financialEntries->where('jenis', 'Pendapatan')->sum('nominal');
+        $expenses = $financialEntries->where('jenis', 'Pengeluaran')->sum('nominal');
 
         return (float) $vehicleProfit + (float) $otherIncome - (float) $expenses;
     }
