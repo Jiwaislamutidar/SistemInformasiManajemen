@@ -18,6 +18,26 @@
                 <div class="rounded-2xl border-l-4 border-red-800 bg-white p-4 shadow-sm"><p class="text-[11px] font-bold uppercase tracking-wider text-gray-400">Approval Pending</p><h3 class="mt-1 text-lg font-extrabold text-gray-900">{{ number_format($pendingApprovals) }} <span class="text-sm font-semibold text-gray-500">Laporan</span></h3><p class="mt-1 text-[10px] font-semibold text-amber-600">Menunggu review owner</p></div>
             </div>
 
+            <section class="rounded-2xl border border-gray-100 bg-white p-5 shadow-sm sm:p-6" aria-labelledby="visi-misi-heading">
+                <div class="mb-5 border-b border-gray-100 pb-4">
+                    <h3 id="visi-misi-heading" class="text-sm font-bold uppercase tracking-wider text-[#183A2A]">Visi &amp; Misi Perusahaan</h3>
+                </div>
+                <div class="grid grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-10">
+                    <div>
+                        <h4 class="mb-2 text-xs font-bold uppercase tracking-wider text-[#D4AF37]">Visi</h4>
+                        <p class="text-sm leading-6 text-gray-600">Menjadi dealer mobil Chery terkemuka dan terpercaya di Indonesia yang memberikan layanan eksekutif, inovatif, dan kepuasan pelanggan tertinggi.</p>
+                    </div>
+                    <div>
+                        <h4 class="mb-2 text-xs font-bold uppercase tracking-wider text-[#D4AF37]">Misi</h4>
+                        <ol class="list-decimal space-y-2 pl-5 text-sm leading-6 text-gray-600 marker:font-semibold marker:text-[#183A2A]">
+                            <li>Menyediakan lini produk kendaraan Chery berkualitas tinggi dengan standar global.</li>
+                            <li>Memberikan pelayanan penjualan dan purna jual (after-sales) yang profesional serta transparan.</li>
+                            <li>Mengembangkan manajemen operasional berbasis teknologi informasi yang efisien dan akurat.</li>
+                        </ol>
+                    </div>
+                </div>
+            </section>
+
             <div class="grid grid-cols-1 gap-6 lg:grid-cols-3">
                 <div class="rounded-2xl border border-gray-200/80 bg-white p-5 shadow-sm lg:col-span-2">
                     <div class="mb-4 flex items-center justify-between"><h3 class="text-sm font-bold uppercase tracking-wider text-gray-800">Tren Penjualan &amp; Profit Bulanan</h3><span class="rounded-lg bg-emerald-50 px-2.5 py-1 text-xs font-semibold text-[#183A2A]">Tahun {{ $dashboardYear }}</span></div>
@@ -29,7 +49,7 @@
                     <div class="space-y-3">
                         @forelse ($laporanMasuk as $report)
                             <div class="rounded-xl border border-gray-100 bg-gray-50 p-3 transition hover:border-[#10261C]/30">
-                                <div class="flex items-center justify-between gap-2 text-xs font-bold text-gray-900"><span class="line-clamp-1">{{ $report->judul_laporan ?: $report->judul }}</span><span class="shrink-0 rounded bg-emerald-100 px-2 py-0.5 text-[10px] text-emerald-800">{{ $report->status === 'dikirim_ke_owner' ? 'Baru' : ucfirst($report->status) }}</span></div>
+                                <div class="flex items-center justify-between gap-2 text-xs font-bold text-gray-900"><span class="line-clamp-1">{{ $report->judul_laporan ?: $report->judul }}</span><span class="shrink-0 text-right text-[10px] font-medium {{ $report->status === 'dikirim_ke_owner' ? 'text-emerald-600' : 'text-gray-500' }}">{{ $report->status === 'dikirim_ke_owner' ? 'Baru' : ucfirst($report->status) }}</span></div>
                                 <p class="mt-1 line-clamp-2 text-xs text-gray-600">{{ $report->catatan ?: $report->catatan_admin ?: $report->ringkasan ?: 'Tidak ada ringkasan.' }}</p>
                                 <span class="mt-2 block text-[10px] text-gray-400">{{ optional($report->tanggal_dikirim ?: $report->created_at)->diffForHumans() }}</span>
                             </div>
